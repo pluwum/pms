@@ -93,6 +93,12 @@ export class BookingController {
                 statusCode: 400,
             }
         }
+        if (createBookingDto.startsAt < new Date()) {
+            return {
+                message: "Start date must be in the future",
+                statusCode: 400,
+            }
+        }
 
         const {
             slotId,

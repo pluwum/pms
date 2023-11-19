@@ -1,7 +1,7 @@
 import { AppDataSource } from "../data-source"
 import { NextFunction, Request, Response } from "express"
 import { User, UserRole } from "../entity/user.entity"
-
+import { generateToken } from "../utils"
 export class UserController {
     private userRepository = AppDataSource.getRepository(User)
 
@@ -32,7 +32,7 @@ export class UserController {
             firstName,
             lastName,
             email,
-            token = "1234567890",
+            token = generateToken(),
             role = UserRole.STANDARD,
         } = request.body
 

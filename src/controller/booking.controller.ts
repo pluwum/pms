@@ -1,7 +1,10 @@
 import { AppDataSource } from "../data-source"
 import { NextFunction, Request, Response } from "express"
 import { Booking } from "../entity/booking.entity"
-import { isAdmin } from "../utils"
+import { formatValidationErrors, isAdmin } from "../utils"
+import { plainToClass } from "class-transformer"
+import { CreateBookingDTO } from "../dto/createBooking.dto"
+import { validate } from "class-validator"
 
 export class BookingController {
     private bookingRepository = AppDataSource.getRepository(Booking)
@@ -78,6 +81,13 @@ export class BookingController {
     }
 
     async create(request: Request, response: Response, next: NextFunction) {
+        const createBookingDto = plainToClass(CreateBookingDTO, request.body)
+        const errors = await validate(createBookingDto)
+
+        if (errors.length > 0) {
+            return { message: formatValidationErrors(errors), statusCode: 400 }
+        }
+
         const {
             slotId,
             ownedBy = request.user.id,

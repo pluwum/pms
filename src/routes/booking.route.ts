@@ -1,12 +1,14 @@
 import { BookingController } from "../controller/booking.controller"
+import { ControllerRoute } from "./types"
 
-export const BookingRoutes = [
+export const BookingRoutes: ControllerRoute[] = [
     {
         method: "post",
         route: "/bookings",
         controller: BookingController,
         action: "create",
         authenticate: false,
+        permissions: [],
     },
 
     {
@@ -15,6 +17,7 @@ export const BookingRoutes = [
         controller: BookingController,
         action: "all",
         authenticate: false,
+        permissions: [],
     },
 
     {
@@ -22,7 +25,8 @@ export const BookingRoutes = [
         route: "/bookings/:id",
         controller: BookingController,
         action: "one",
-        authenticate: false,
+        authenticate: true,
+        permissions: [],
     },
     {
         method: "delete",
@@ -30,6 +34,7 @@ export const BookingRoutes = [
         controller: BookingController,
         action: "remove",
         authenticate: false,
+        permissions: [],
     },
     {
         method: "patch",
@@ -37,5 +42,6 @@ export const BookingRoutes = [
         controller: BookingController,
         action: "update",
         authenticate: false,
+        permissions: [],
     },
 ]

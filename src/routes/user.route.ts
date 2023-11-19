@@ -1,12 +1,14 @@
 import { UserController } from "../controller/user.controller"
+import { ControllerRoute } from "./types"
 
-export const UserRoutes = [
+export const UserRoutes: ControllerRoute[] = [
     {
         method: "get",
         route: "/users",
         controller: UserController,
         action: "all",
         authenticate: false,
+        permissions: [],
     },
     {
         method: "get",
@@ -14,6 +16,7 @@ export const UserRoutes = [
         controller: UserController,
         action: "one",
         authenticate: false,
+        permissions: [],
     },
     {
         method: "post",
@@ -21,6 +24,7 @@ export const UserRoutes = [
         controller: UserController,
         action: "create",
         authenticate: false,
+        permissions: [],
     },
     {
         method: "delete",
@@ -28,5 +32,6 @@ export const UserRoutes = [
         controller: UserController,
         action: "remove",
         authenticate: false,
+        permissions: [],
     },
 ]

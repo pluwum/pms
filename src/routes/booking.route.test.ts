@@ -16,6 +16,19 @@ describe("Route /bookings", () => {
         await createManyParkingSlots(fakeParkingSlots)
     })
 
+    it("GET /bookings should return all bookings", async () => {
+        const singleParkingSlot = await createParkingSlot()
+        await createManyBookings(singleParkingSlot, singleUser)
+
+        const response = await request(server)
+            .get("/bookings/")
+            .set("Content-Type", "application/json")
+            .set("Authorization", singleUser.token)
+
+        expect(response.status).toBe(200)
+        expect(response.body.data).toHaveLength(2)
+    })
+
     it("POST /bookings should create a booking", async () => {
         const parkingSlot = await createParkingSlot()
         const response = await request(server)
@@ -35,18 +48,6 @@ describe("Route /bookings", () => {
         })
     })
 
-    it("GET /bookings should return all bookings", async () => {
-        const singleParkingSlot = await createParkingSlot()
-        await createManyBookings(singleParkingSlot, singleUser)
-
-        const response = await request(server)
-            .get("/bookings/")
-            .set("Content-Type", "application/json")
-            .set("Authorization", singleUser.token)
-
-        expect(response.status).toBe(200)
-        expect(response.body.data).toHaveLength(2)
-    })
     it("GET /bookings/:id should return a booking", async () => {
         const parkingSlot = await createParkingSlot()
         const booking = await createBooking({ parkingSlot, owner: singleUser })

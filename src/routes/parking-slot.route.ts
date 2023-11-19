@@ -1,12 +1,14 @@
 import { ParkingSlotController } from "../controller/parking-slot.controller"
+import { ControllerRoute } from "./types"
 
-export const ParkingSlotRoutes = [
+export const ParkingSlotRoutes: ControllerRoute[] = [
     {
         method: "get",
         route: "/parking-slots",
         controller: ParkingSlotController,
         action: "all",
         authenticate: false,
+        permissions: [],
     },
     {
         method: "get",
@@ -14,6 +16,7 @@ export const ParkingSlotRoutes = [
         controller: ParkingSlotController,
         action: "one",
         authenticate: false,
+        permissions: [],
     },
     {
         method: "post",
@@ -21,6 +24,7 @@ export const ParkingSlotRoutes = [
         controller: ParkingSlotController,
         action: "create",
         authenticate: false,
+        permissions: [],
     },
     {
         method: "delete",
@@ -28,6 +32,7 @@ export const ParkingSlotRoutes = [
         controller: ParkingSlotController,
         action: "remove",
         authenticate: false,
+        permissions: [],
     },
     {
         method: "patch",
@@ -35,5 +40,6 @@ export const ParkingSlotRoutes = [
         controller: ParkingSlotController,
         action: "update",
         authenticate: false,
+        permissions: [],
     },
 ]

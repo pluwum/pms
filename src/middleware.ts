@@ -1,6 +1,6 @@
 import express, { Express, Request, Response } from "express"
 import { AppDataSource } from "./data-source"
-import { User } from "./entity/user.entity"
+import { User, UserRole } from "./entity/user.entity"
 
 export const authenticate = (route) => async (req, res, next) => {
     if (!route.authenticate) {
@@ -32,4 +32,11 @@ export const authenticate = (route) => async (req, res, next) => {
             message: "No token provided.",
         })
     }
+}
+
+export const authorize = (permittedRoles: UserRole[]) => (req, res, next) => {
+    if (!permittedRoles.includes(req.user.role)) {
+        return res.status(403).send({ message: "Insufficient permissions" })
+    }
+    next()
 }

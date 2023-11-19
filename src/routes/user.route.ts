@@ -1,0 +1,11 @@
+import { UserController } from "../controller/user.controller"
+
+export const UserRoutes = [
+    {
+        method: "get",
+        route: "/users",
+        controller: UserController,
+        action: "all",
+        authenticate: false,
+    },
+]

@@ -105,7 +105,6 @@ export class BookingController {
                 statusCode: 201,
             }
         } catch (error) {
-            console.log(error)
             return { message: error.message, statusCode: 500 }
         }
     }

@@ -54,7 +54,10 @@ export const createBooking = async ({
         })
     )
 }
-const createBookingStartAndEndDates = (): { startsAt: Date; endsAt: Date } => {
+export const createBookingStartAndEndDates = (): {
+    startsAt: Date
+    endsAt: Date
+} => {
     const today = new Date()
     const twoDaysLater = new Date()
 

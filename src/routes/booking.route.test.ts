@@ -7,7 +7,11 @@ import {
     fakeParkingSlots,
 } from "../scripts/parking-slot"
 import { createUser, singleUser } from "../scripts/users"
-import { createBooking, createManyBookings } from "../scripts/bookings"
+import {
+    createBooking,
+    createBookingStartAndEndDates,
+    createManyBookings,
+} from "../scripts/bookings"
 
 describe("Route /bookings", () => {
     beforeAll(async () => {
@@ -23,22 +27,25 @@ describe("Route /bookings", () => {
         const response = await request(server)
             .get("/bookings/")
             .set("Content-Type", "application/json")
-            .set("Authorization", singleUser.token)
+            .set("x-api-token", singleUser.token)
 
         expect(response.status).toBe(200)
         expect(response.body.data).toHaveLength(2)
     })
 
     it("POST /bookings should create a booking", async () => {
+        const { startsAt, endsAt } = createBookingStartAndEndDates()
         const parkingSlot = await createParkingSlot()
         const response = await request(server)
             .post("/bookings")
             .send({
                 slotId: parkingSlot.id,
                 ownedBy: singleUser.id,
+                startsAt,
+                endsAt,
             })
             .set("Content-Type", "application/json")
-            .set("Authorization", singleUser.token)
+            .set("x-api-token", singleUser.token)
 
         expect(response.status).toBe(201)
 
@@ -54,7 +61,7 @@ describe("Route /bookings", () => {
         const response = await request(server)
             .get(`/bookings/${booking.id}`)
             .set("Content-Type", "application/json")
-            .set("Authorization", singleUser.token)
+            .set("x-api-token", singleUser.token)
 
         expect(response.status).toBe(200)
         expect(response.body.data).toEqual({
@@ -80,7 +87,7 @@ describe("Route /bookings", () => {
         const response = await request(server)
             .delete(`/bookings/${booking.id}`)
             .set("Content-Type", "application/json")
-            .set("Authorization", singleUser.token)
+            .set("x-api-token", singleUser.token)
 
         expect(response.status).toBe(200)
         expect(response.body).toEqual({
@@ -101,7 +108,7 @@ describe("Route /bookings", () => {
                 slotId: secondParkingSlot.id,
             })
             .set("Content-Type", "application/json")
-            .set("Authorization", singleUser.token)
+            .set("x-api-token", singleUser.token)
 
         expect(response.status).toBe(200)
         expect(response.body.data).toMatchObject({

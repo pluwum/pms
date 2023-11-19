@@ -20,7 +20,7 @@ describe("Route /parking-slots", () => {
         const response = await request(server)
             .get("/parking-slots/")
             .set("Content-Type", "application/json")
-            .set("Authorization", singleUser.token)
+            .set("x-api-token", singleUser.token)
 
         expect(response.status).toBe(200)
         expect(response.body.data).toEqual([
@@ -51,7 +51,7 @@ describe("Route /parking-slots", () => {
         const response = await request(server)
             .get(`/parking-slots/${parkingSlot.id}`)
             .set("Content-Type", "application/json")
-            .set("Authorization", singleUser.token)
+            .set("x-api-token", singleUser.token)
 
         expect(response.status).toBe(200)
         expect(response.body.data).toEqual({
@@ -74,7 +74,7 @@ describe("Route /parking-slots", () => {
                 status_reason: null,
             })
             .set("Content-Type", "application/json")
-            .set("Authorization", singleUser.token)
+            .set("x-api-token", singleUser.token)
 
         expect(response.status).toBe(201)
         expect(response.body.data).toEqual({
@@ -83,9 +83,9 @@ describe("Route /parking-slots", () => {
             status: ParkingSlotStatus.ACTIVE,
             status_reason: null,
             createdAt: expect.any(String),
-            createdBy: "userFromSession",
+            createdBy: singleUser.id,
             updatedAt: expect.any(String),
-            updatedBy: "userFromSession",
+            updatedBy: singleUser.id,
         })
     })
     it("DELETE /parking-slots/:id should remove a parking slot", async () => {
@@ -94,7 +94,7 @@ describe("Route /parking-slots", () => {
         const response = await request(server)
             .delete(`/parking-slots/${parkingSlot.id}`)
             .set("Content-Type", "application/json")
-            .set("Authorization", singleUser.token)
+            .set("x-api-token", singleUser.token)
 
         expect(response.status).toBe(200)
         expect(response.body).toEqual({
@@ -113,7 +113,7 @@ describe("Route /parking-slots", () => {
                 status_reason: "testing",
             })
             .set("Content-Type", "application/json")
-            .set("Authorization", singleUser.token)
+            .set("x-api-token", singleUser.token)
 
         expect(response.status).toBe(200)
         expect(response.body.data).toEqual({

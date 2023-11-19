@@ -8,7 +8,7 @@ export const fakerUsers = [
         firstName: "velva",
         lastName: "test",
         email: "luwum.patrick+test1@gmail.com",
-        token: "1234567890",
+        token: "velva1234567890",
         role: "admin",
     },
     {
@@ -16,7 +16,7 @@ export const fakerUsers = [
         firstName: "francesco",
         lastName: "test",
         email: "luwum.patrick+test2@gmail.com",
-        token: "1234567890",
+        token: "francesco1234567890",
         role: "admin",
     },
 ]
@@ -26,7 +26,7 @@ export const singleUser = {
     firstName: "Patrick",
     lastName: "Luwum",
     email: "luwum.patrick+test3@gmail.com",
-    token: "1234567890",
+    token: "luwum1234567890",
     role: "admin",
 }
 export const createUser = async (user = singleUser) => {

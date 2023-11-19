@@ -22,4 +22,11 @@ export const ParkingSlotRoutes = [
         action: "create",
         authenticate: false,
     },
+    {
+        method: "delete",
+        route: "/parking-slots/:id",
+        controller: ParkingSlotController,
+        action: "remove",
+        authenticate: false,
+    },
 ]

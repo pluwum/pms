@@ -88,4 +88,18 @@ describe("Route /parking-slots", () => {
             updatedBy: "userFromSession",
         })
     })
+    it("DELETE /parking-slots/:id should remove a parking slot", async () => {
+        const parkingSlot = await createParkingSlot()
+
+        const response = await request(server)
+            .delete(`/parking-slots/${parkingSlot.id}`)
+            .set("Content-Type", "application/json")
+            .set("Authorization", singleUser.token)
+
+        expect(response.status).toBe(200)
+        expect(response.body).toEqual({
+            message: "parking slot has been removed",
+            statusCode: 200,
+        })
+    })
 })

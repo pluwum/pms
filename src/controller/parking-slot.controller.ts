@@ -54,4 +54,26 @@ export class ParkingSlotController {
             return { message: error.message, statusCode: 500 }
         }
     }
+
+    async remove(request: Request, response: Response, next: NextFunction) {
+        const id = request.params.id
+
+        let parkingSlotToRemove = await this.parkingSlotRepository.findOneBy({
+            id,
+        })
+
+        if (!parkingSlotToRemove) {
+            return {
+                message: "this parking slot does not exist",
+                statusCode: 404,
+            }
+        }
+
+        await this.parkingSlotRepository.remove(parkingSlotToRemove)
+
+        return {
+            message: "parking slot has been removed",
+            statusCode: 200,
+        }
+    }
 }

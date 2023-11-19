@@ -1,6 +1,8 @@
 import { BookingController } from "../controller/booking.controller"
+import { UserRole } from "../entity/user.entity"
 import { ControllerRoute } from "./types"
 
+const permissions = [UserRole.STANDARD, UserRole.ADMIN]
 export const BookingRoutes: ControllerRoute[] = [
     {
         method: "post",
@@ -8,25 +10,23 @@ export const BookingRoutes: ControllerRoute[] = [
         controller: BookingController,
         action: "create",
         authenticate: false,
-        permissions: [],
+        permissions,
     },
-
     {
         method: "get",
         route: "/bookings",
         controller: BookingController,
         action: "all",
         authenticate: false,
-        permissions: [],
+        permissions,
     },
-
     {
         method: "get",
         route: "/bookings/:id",
         controller: BookingController,
         action: "one",
         authenticate: true,
-        permissions: [],
+        permissions,
     },
     {
         method: "delete",
@@ -34,7 +34,7 @@ export const BookingRoutes: ControllerRoute[] = [
         controller: BookingController,
         action: "remove",
         authenticate: false,
-        permissions: [],
+        permissions,
     },
     {
         method: "patch",
@@ -42,6 +42,6 @@ export const BookingRoutes: ControllerRoute[] = [
         controller: BookingController,
         action: "update",
         authenticate: false,
-        permissions: [],
+        permissions,
     },
 ]

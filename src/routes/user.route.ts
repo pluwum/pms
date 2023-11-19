@@ -1,6 +1,8 @@
 import { UserController } from "../controller/user.controller"
+import { UserRole } from "../entity/user.entity"
 import { ControllerRoute } from "./types"
 
+const permissions = [UserRole.ADMIN]
 export const UserRoutes: ControllerRoute[] = [
     {
         method: "get",
@@ -8,7 +10,7 @@ export const UserRoutes: ControllerRoute[] = [
         controller: UserController,
         action: "all",
         authenticate: false,
-        permissions: [],
+        permissions,
     },
     {
         method: "get",
@@ -16,7 +18,7 @@ export const UserRoutes: ControllerRoute[] = [
         controller: UserController,
         action: "one",
         authenticate: false,
-        permissions: [],
+        permissions,
     },
     {
         method: "post",
@@ -24,7 +26,7 @@ export const UserRoutes: ControllerRoute[] = [
         controller: UserController,
         action: "create",
         authenticate: false,
-        permissions: [],
+        permissions,
     },
     {
         method: "delete",
@@ -32,6 +34,6 @@ export const UserRoutes: ControllerRoute[] = [
         controller: UserController,
         action: "remove",
         authenticate: false,
-        permissions: [],
+        permissions,
     },
 ]

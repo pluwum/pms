@@ -1,5 +1,8 @@
 import { ParkingSlotController } from "../controller/parking-slot.controller"
+import { UserRole } from "../entity/user.entity"
 import { ControllerRoute } from "./types"
+
+const permissions = [UserRole.ADMIN]
 
 export const ParkingSlotRoutes: ControllerRoute[] = [
     {
@@ -8,7 +11,7 @@ export const ParkingSlotRoutes: ControllerRoute[] = [
         controller: ParkingSlotController,
         action: "all",
         authenticate: false,
-        permissions: [],
+        permissions,
     },
     {
         method: "get",
@@ -16,7 +19,7 @@ export const ParkingSlotRoutes: ControllerRoute[] = [
         controller: ParkingSlotController,
         action: "one",
         authenticate: false,
-        permissions: [],
+        permissions,
     },
     {
         method: "post",
@@ -24,7 +27,7 @@ export const ParkingSlotRoutes: ControllerRoute[] = [
         controller: ParkingSlotController,
         action: "create",
         authenticate: false,
-        permissions: [],
+        permissions,
     },
     {
         method: "delete",
@@ -32,7 +35,7 @@ export const ParkingSlotRoutes: ControllerRoute[] = [
         controller: ParkingSlotController,
         action: "remove",
         authenticate: false,
-        permissions: [],
+        permissions,
     },
     {
         method: "patch",
@@ -40,6 +43,6 @@ export const ParkingSlotRoutes: ControllerRoute[] = [
         controller: ParkingSlotController,
         action: "update",
         authenticate: false,
-        permissions: [],
+        permissions,
     },
 ]

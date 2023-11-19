@@ -15,4 +15,11 @@ export const UserRoutes = [
         action: "one",
         authenticate: false,
     },
+    {
+        method: "post",
+        route: "/users",
+        controller: UserController,
+        action: "create",
+        authenticate: false,
+    },
 ]

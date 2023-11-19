@@ -34,4 +34,17 @@ describe("Route /bookings", () => {
             ownedBy: singleUser.id,
         })
     })
+
+    it("GET /bookings should return all bookings", async () => {
+        const singleParkingSlot = await createParkingSlot()
+        await createManyBookings(singleParkingSlot, singleUser)
+
+        const response = await request(server)
+            .get("/bookings/")
+            .set("Content-Type", "application/json")
+            .set("Authorization", singleUser.token)
+
+        expect(response.status).toBe(200)
+        expect(response.body.data).toHaveLength(2)
+    })
 })

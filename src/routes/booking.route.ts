@@ -8,4 +8,12 @@ export const BookingRoutes = [
         action: "create",
         authenticate: false,
     },
+
+    {
+        method: "get",
+        route: "/bookings",
+        controller: BookingController,
+        action: "all",
+        authenticate: false,
+    },
 ]

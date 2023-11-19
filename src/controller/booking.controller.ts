@@ -5,6 +5,27 @@ import { Booking } from "../entity/booking.entity"
 export class BookingController {
     private bookingRepository = AppDataSource.getRepository(Booking)
 
+    async all(request: Request, response: Response, next: NextFunction) {
+        const bookings = await this.bookingRepository.find({
+            relations: ["slot", "ownedBy"],
+        })
+
+        const modifiedBookings = bookings.map(
+            ({ slot, ownedBy, ...booking }) => {
+                return {
+                    ...booking,
+                    slotId: slot.id,
+                    ownedBy: ownedBy.id,
+                }
+            }
+        )
+
+        return {
+            data: modifiedBookings,
+            statusCode: 200,
+        }
+    }
+
     async create(request: Request, response: Response, next: NextFunction) {
         const today = new Date()
         const twoDaysLater = new Date()

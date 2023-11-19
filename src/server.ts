@@ -6,13 +6,15 @@ import { authenticate, authorize } from "./api/middleware"
 import dotenv from "dotenv"
 
 dotenv.config()
-const server = express()
+const server: Express = express()
+const baseUrl = process.env.BASE_URL || "/api/v1"
 
 server.use(bodyParser.json())
 server.use(cors())
 // register express routes from defined application routes
 routes.forEach((route) => {
-    ;(server as any)[route.method](
+    route.route = `${baseUrl}${route.route}`
+    server[route.method](
         route.route,
         authenticate(route),
         authorize(route),

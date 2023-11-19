@@ -35,8 +35,8 @@ export class ParkingSlotController {
         } = request.body
 
         const parkingSlot = Object.assign(new ParkingSlot(), {
-            createdBy: "userFromSession",
-            updatedBy: "userFromSession",
+            createdBy: request.user.id,
+            updatedBy: request.user.id,
             name,
             status,
             status_reason,

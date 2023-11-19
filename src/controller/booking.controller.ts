@@ -6,6 +6,7 @@ export class BookingController {
     private bookingRepository = AppDataSource.getRepository(Booking)
 
     async all(request: Request, response: Response, next: NextFunction) {
+        console.log("request.session", request.user)
         const bookings = await this.bookingRepository.find({
             relations: ["slot", "ownedBy"],
         })
@@ -67,18 +68,14 @@ export class BookingController {
     }
 
     async create(request: Request, response: Response, next: NextFunction) {
-        const today = new Date()
-        const twoDaysLater = new Date()
-
-        twoDaysLater.setDate(today.getDate() + 2)
-
+        //TODO: explicitly  validate ownedBy for admin vs standard user
         const {
             slotId,
-            ownedBy = "someUser",
-            startsAt = today,
-            endsAt = twoDaysLater,
-            createdBy = "userFromSession",
-            updatedBy = "userFromSession",
+            ownedBy = request.user.id,
+            startsAt,
+            endsAt,
+            createdBy = request.user.id,
+            updatedBy = request.user.id,
         } = request.body
 
         const booking = Object.assign(new Booking(), {

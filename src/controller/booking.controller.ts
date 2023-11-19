@@ -1,13 +1,17 @@
 import { AppDataSource } from "../data-source"
 import { NextFunction, Request, Response } from "express"
 import { Booking } from "../entity/booking.entity"
+import { isAdmin } from "../utils"
 
 export class BookingController {
     private bookingRepository = AppDataSource.getRepository(Booking)
 
     async all(request: Request, response: Response, next: NextFunction) {
-        console.log("request.session", request.user)
+        const where = isAdmin(request.user)
+            ? {}
+            : { createdBy: request.user.id }
         const bookings = await this.bookingRepository.find({
+            where,
             relations: ["slot", "ownedBy"],
         })
 
@@ -29,9 +33,12 @@ export class BookingController {
 
     async one(request: Request, response: Response, next: NextFunction) {
         const id = request.params.id
+        const where = isAdmin(request.user)
+            ? {}
+            : { createdBy: request.user.id }
 
         const booking = await this.bookingRepository.findOne({
-            where: { id },
+            where: { id, ...where },
             relations: ["slot", "ownedBy"],
         })
 
@@ -47,9 +54,12 @@ export class BookingController {
 
     async remove(request: Request, response: Response, next: NextFunction) {
         const id = request.params.id
-
+        const where = isAdmin(request.user)
+            ? {}
+            : { createdBy: request.user.id }
         let bookingToRemove = await this.bookingRepository.findOneBy({
             id,
+            ...where,
         })
 
         if (!bookingToRemove) {
@@ -68,7 +78,6 @@ export class BookingController {
     }
 
     async create(request: Request, response: Response, next: NextFunction) {
-        //TODO: explicitly  validate ownedBy for admin vs standard user
         const {
             slotId,
             ownedBy = request.user.id,
@@ -103,9 +112,12 @@ export class BookingController {
 
     async update(request: Request, response: Response, next: NextFunction) {
         const id = request.params.id
+        const where = isAdmin(request.user)
+            ? {}
+            : { createdBy: request.user.id }
 
         const booking = await this.bookingRepository.findOne({
-            where: { id },
+            where: { id, ...where },
         })
 
         if (!booking) {

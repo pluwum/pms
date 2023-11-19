@@ -2,7 +2,7 @@ import express, { Express, Request, Response } from "express"
 import * as bodyParser from "body-parser"
 import routes from "./routes"
 import cors from "cors"
-import { doNothing, verifyToken } from "./utils"
+import { authenticate } from "./middleware"
 import dotenv from "dotenv"
 
 dotenv.config()
@@ -14,7 +14,7 @@ server.use(cors())
 routes.forEach((route) => {
     ;(server as any)[route.method](
         route.route,
-        route.authenticate ? verifyToken : doNothing,
+        authenticate(route),
         (req: Request, res: Response, next: Function) => {
             const result = new (route.controller as any)()[route.action](
                 req,

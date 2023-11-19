@@ -3,6 +3,7 @@ import server from "../server"
 import { initializeDb } from "../data-source"
 import {
     createManyParkingSlots,
+    createParkingSlot,
     fakeParkingSlots,
 } from "../scripts/parking-slot"
 import { createUser, singleUser } from "../scripts/users"
@@ -44,5 +45,24 @@ describe("Route /parking-slots", () => {
                 updatedBy: "userFromSession",
             },
         ])
+    })
+    it("GET /parking-slots/:id should return a parking slot", async () => {
+        const parkingSlot = await createParkingSlot()
+        const response = await request(server)
+            .get(`/parking-slots/${parkingSlot.id}`)
+            .set("Content-Type", "application/json")
+            .set("Authorization", singleUser.token)
+
+        expect(response.status).toBe(200)
+        expect(response.body.data).toEqual({
+            id: expect.any(String),
+            name: "East Wing #4",
+            status: ParkingSlotStatus.ACTIVE,
+            status_reason: null,
+            createdAt: expect.any(String),
+            createdBy: "userFromSession",
+            updatedAt: expect.any(String),
+            updatedBy: "userFromSession",
+        })
     })
 })

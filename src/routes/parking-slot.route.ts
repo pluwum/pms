@@ -8,4 +8,11 @@ export const ParkingSlotRoutes = [
         action: "all",
         authenticate: false,
     },
+    {
+        method: "get",
+        route: "/parking-slots/:id",
+        controller: ParkingSlotController,
+        action: "one",
+        authenticate: false,
+    },
 ]

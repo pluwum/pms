@@ -8,4 +8,11 @@ export const UserRoutes = [
         action: "all",
         authenticate: false,
     },
+    {
+        method: "get",
+        route: "/users/:id",
+        controller: UserController,
+        action: "one",
+        authenticate: false,
+    },
 ]

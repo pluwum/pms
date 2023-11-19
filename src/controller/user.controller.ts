@@ -13,4 +13,17 @@ export class UserController {
             statusCode: 200,
         }
     }
+
+    async one(request: Request, response: Response, next: NextFunction) {
+        const id = request.params.id
+
+        const user = await this.userRepository.findOne({
+            where: { id },
+        })
+
+        if (!user) {
+            return { statusCode: 404, message: "unregistered user" }
+        }
+        return { data: user, statusCode: 200 }
+    }
 }

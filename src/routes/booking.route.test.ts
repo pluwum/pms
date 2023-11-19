@@ -47,4 +47,25 @@ describe("Route /bookings", () => {
         expect(response.status).toBe(200)
         expect(response.body.data).toHaveLength(2)
     })
+    it("GET /bookings/:id should return a booking", async () => {
+        const parkingSlot = await createParkingSlot()
+        const booking = await createBooking({ parkingSlot, owner: singleUser })
+        const response = await request(server)
+            .get(`/bookings/${booking.id}`)
+            .set("Content-Type", "application/json")
+            .set("Authorization", singleUser.token)
+
+        expect(response.status).toBe(200)
+        expect(response.body.data).toEqual({
+            id: expect.any(String),
+            slotId: expect.any(String),
+            ownedBy: expect.any(String),
+            startsAt: expect.any(String),
+            endsAt: expect.any(String),
+            createdAt: expect.any(String),
+            createdBy: expect.any(String),
+            updatedAt: expect.any(String),
+            updatedBy: expect.any(String),
+        })
+    })
 })

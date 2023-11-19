@@ -26,6 +26,24 @@ export class BookingController {
         }
     }
 
+    async one(request: Request, response: Response, next: NextFunction) {
+        const id = request.params.id
+
+        const booking = await this.bookingRepository.findOne({
+            where: { id },
+            relations: ["slot", "ownedBy"],
+        })
+
+        if (!booking) {
+            return { statusCode: 404, message: "Booking not found" }
+        }
+        const { ownedBy, slot, ...rest } = booking
+        return {
+            data: { ownedBy: ownedBy.id, slotId: slot.id, ...rest },
+            statusCode: 200,
+        }
+    }
+
     async create(request: Request, response: Response, next: NextFunction) {
         const today = new Date()
         const twoDaysLater = new Date()

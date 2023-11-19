@@ -1,17 +1,17 @@
 import request from "supertest"
-import server from "../server"
-import { initializeDb } from "../data-source"
+import server from "../../server"
+import { initializeDb } from "../../data-source"
 import {
     createManyParkingSlots,
     createParkingSlot,
     fakeParkingSlots,
-} from "../scripts/parking-slot"
-import { createUser, singleUser } from "../scripts/users"
+} from "../../scripts/parking-slot"
+import { createUser, singleUser } from "../../scripts/users"
 import {
     createBooking,
     createBookingStartAndEndDates,
     createManyBookings,
-} from "../scripts/bookings"
+} from "../../scripts/bookings"
 
 describe("Route /bookings", () => {
     beforeAll(async () => {

@@ -1,5 +1,5 @@
 import crypto from "crypto"
-import { UserRole } from "./entity/user.entity"
+import { UserRole } from "./api/user/user.entity"
 import { ValidationError } from "class-validator"
 
 export const generateToken = (length = 48) => {

@@ -1,8 +1,8 @@
 import express, { Express, Request, Response } from "express"
 import * as bodyParser from "body-parser"
-import routes from "./routes"
+import routes from "./api/routes"
 import cors from "cors"
-import { authenticate, authorize } from "./middleware"
+import { authenticate, authorize } from "./api/middleware"
 import dotenv from "dotenv"
 
 dotenv.config()

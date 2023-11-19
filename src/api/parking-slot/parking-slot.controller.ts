@@ -1,6 +1,6 @@
-import { AppDataSource } from "../data-source"
+import { AppDataSource } from "../../data-source"
 import { NextFunction, Request, Response } from "express"
-import { ParkingSlot, ParkingSlotStatus } from "../entity/parking-slot.entity"
+import { ParkingSlot, ParkingSlotStatus } from "./parking-slot.entity"
 
 export class ParkingSlotController {
     private parkingSlotRepository = AppDataSource.getRepository(ParkingSlot)

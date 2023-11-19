@@ -22,6 +22,13 @@ export class ParkingSlot {
     @Column()
     name: string
 
+    // @Column({
+    //     type: "enum",
+    //     enum: ParkingSlotStatus,
+    //     default: ParkingSlotStatus.ACTIVE,
+    // })
+    // status: ParkingSlotStatus
+
     @Column()
     status: string
 

@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from "express"
-import { AppDataSource } from "./data-source"
-import { User, UserRole } from "./entity/user.entity"
-import { ControllerRoute } from "./routes/types"
+import { AppDataSource } from "../data-source"
+import { User, UserRole } from "./user/user.entity"
+import { ControllerRoute } from "../types"
 
 export const authenticate =
     (route: ControllerRoute) => async (req, res, next) => {

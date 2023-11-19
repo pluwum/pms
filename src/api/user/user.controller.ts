@@ -1,7 +1,7 @@
-import { AppDataSource } from "../data-source"
+import { AppDataSource } from "../../data-source"
 import { NextFunction, Request, Response } from "express"
-import { User, UserRole } from "../entity/user.entity"
-import { generateToken } from "../utils"
+import { User, UserRole } from "./user.entity"
+import { generateToken } from "../../utils"
 export class UserController {
     private userRepository = AppDataSource.getRepository(User)
 

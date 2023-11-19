@@ -1,7 +1,7 @@
 import request from "supertest"
-import server from "../server"
-import { initializeDb } from "../data-source"
-import { createManyUsers, createUser, fakerUsers } from "../scripts/users"
+import server from "../../server"
+import { initializeDb } from "../../data-source"
+import { createManyUsers, createUser, fakerUsers } from "../../scripts/users"
 
 describe("Route /users", () => {
     beforeAll(async () => {

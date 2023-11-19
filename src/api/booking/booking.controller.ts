@@ -1,9 +1,9 @@
-import { AppDataSource } from "../data-source"
+import { AppDataSource } from "../../data-source"
 import { NextFunction, Request, Response } from "express"
-import { Booking } from "../entity/booking.entity"
-import { formatValidationErrors, isAdmin } from "../utils"
+import { Booking } from "./booking.entity"
+import { formatValidationErrors, isAdmin } from "../../utils"
 import { plainToClass } from "class-transformer"
-import { CreateBookingDTO } from "../dto/createBooking.dto"
+import { CreateBookingDTO } from "./dto/createBooking.dto"
 import { validate } from "class-validator"
 
 export class BookingController {
@@ -93,17 +93,15 @@ export class BookingController {
             ownedBy = request.user.id,
             startsAt,
             endsAt,
-            createdBy = request.user.id,
-            updatedBy = request.user.id,
-        } = request.body
+        } = createBookingDto
 
         const booking = Object.assign(new Booking(), {
             slot: slotId,
             ownedBy,
             startsAt,
             endsAt,
-            createdBy,
-            updatedBy,
+            createdBy: request.user.id,
+            updatedBy: request.user.id,
         })
 
         try {

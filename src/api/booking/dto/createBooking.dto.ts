@@ -1,15 +1,16 @@
-import { IsUUID, IsDate } from "class-validator"
+import { IsUUID, IsDate, IsDateString, IsOptional } from "class-validator"
 
 export class CreateBookingDTO {
     @IsUUID()
     slotId: string
 
     @IsUUID()
+    @IsOptional()
     ownedBy: string
 
-    @IsDate()
+    @IsDateString()
     startsAt: Date
 
-    @IsDate()
+    @IsDateString()
     endsAt: Date
 }

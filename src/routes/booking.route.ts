@@ -9,7 +9,7 @@ export const BookingRoutes: ControllerRoute[] = [
         route: "/bookings",
         controller: BookingController,
         action: "create",
-        authenticate: false,
+        authenticate: true,
         permissions,
     },
     {
@@ -17,7 +17,7 @@ export const BookingRoutes: ControllerRoute[] = [
         route: "/bookings",
         controller: BookingController,
         action: "all",
-        authenticate: false,
+        authenticate: true,
         permissions,
     },
     {
@@ -33,7 +33,7 @@ export const BookingRoutes: ControllerRoute[] = [
         route: "/bookings/:id",
         controller: BookingController,
         action: "remove",
-        authenticate: false,
+        authenticate: true,
         permissions,
     },
     {
@@ -41,7 +41,7 @@ export const BookingRoutes: ControllerRoute[] = [
         route: "/bookings/:id",
         controller: BookingController,
         action: "update",
-        authenticate: false,
+        authenticate: true,
         permissions,
     },
 ]

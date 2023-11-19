@@ -15,7 +15,7 @@ routes.forEach((route) => {
     ;(server as any)[route.method](
         route.route,
         authenticate(route),
-        authorize(route.permissions),
+        authorize(route),
         (req: Request, res: Response, next: Function) => {
             const result = new (route.controller as any)()[route.action](
                 req,

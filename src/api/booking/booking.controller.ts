@@ -87,6 +87,12 @@ export class BookingController {
         if (errors.length > 0) {
             return { message: formatValidationErrors(errors), statusCode: 400 }
         }
+        if (createBookingDto.startsAt >= createBookingDto.endsAt) {
+            return {
+                message: "Start date must be before end date",
+                statusCode: 400,
+            }
+        }
 
         const {
             slotId,

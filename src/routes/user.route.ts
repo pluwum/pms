@@ -22,4 +22,11 @@ export const UserRoutes = [
         action: "create",
         authenticate: false,
     },
+    {
+        method: "delete",
+        route: "/users/:id",
+        controller: UserController,
+        action: "remove",
+        authenticate: false,
+    },
 ]

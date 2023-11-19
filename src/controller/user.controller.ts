@@ -54,4 +54,21 @@ export class UserController {
             return { message: error.message, statusCode: 500 }
         }
     }
+
+    async remove(request: Request, response: Response, next: NextFunction) {
+        const id = request.params.id
+
+        let userToRemove = await this.userRepository.findOneBy({ id })
+
+        if (!userToRemove) {
+            return { message: "this user does not exist", statusCode: 404 }
+        }
+
+        await this.userRepository.remove(userToRemove)
+
+        return {
+            message: "user has been removed",
+            statusCode: 200,
+        }
+    }
 }

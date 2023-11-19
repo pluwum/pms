@@ -103,4 +103,31 @@ export class BookingController {
             return { message: error.message, statusCode: 500 }
         }
     }
+
+    async update(request: Request, response: Response, next: NextFunction) {
+        const id = request.params.id
+
+        const booking = await this.bookingRepository.findOne({
+            where: { id },
+        })
+
+        if (!booking) {
+            return { statusCode: 404, message: "Booking is not found" }
+        }
+
+        const { slotId: slot, ...updates } = request.body
+
+        this.bookingRepository.merge(booking, { slot, ...updates })
+
+        try {
+            const { slot: slotId, ...newBooking } =
+                await this.bookingRepository.save(booking)
+            return {
+                data: { slotId, ...newBooking },
+                statusCode: 200,
+            }
+        } catch (error) {
+            return { message: error.message, statusCode: 500 }
+        }
+    }
 }

@@ -31,4 +31,11 @@ export const BookingRoutes = [
         action: "remove",
         authenticate: false,
     },
+    {
+        method: "patch",
+        route: "/bookings/:id",
+        controller: BookingController,
+        action: "update",
+        authenticate: false,
+    },
 ]

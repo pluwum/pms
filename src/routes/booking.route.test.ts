@@ -87,4 +87,25 @@ describe("Route /bookings", () => {
             statusCode: 200,
         })
     })
+    it("PATCH /bookings/:id should update a parking slot", async () => {
+        const firstParkingSlot = await createParkingSlot()
+        const booking = await createBooking({
+            parkingSlot: firstParkingSlot,
+            owner: singleUser,
+        })
+        const secondParkingSlot = await createParkingSlot()
+        const response = await request(server)
+            .patch(`/bookings/${booking.id}`)
+            .send({
+                slotId: secondParkingSlot.id,
+            })
+            .set("Content-Type", "application/json")
+            .set("Authorization", singleUser.token)
+
+        expect(response.status).toBe(200)
+        expect(response.body.data).toMatchObject({
+            id: booking.id,
+            slotId: secondParkingSlot.id,
+        })
+    })
 })

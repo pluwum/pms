@@ -65,4 +65,27 @@ describe("Route /parking-slots", () => {
             updatedBy: "userFromSession",
         })
     })
+    it("POST /parking-slots should create a parking slot", async () => {
+        const response = await request(server)
+            .post("/parking-slots")
+            .send({
+                name: "East Wing #3",
+                status: ParkingSlotStatus.ACTIVE,
+                status_reason: null,
+            })
+            .set("Content-Type", "application/json")
+            .set("Authorization", singleUser.token)
+
+        expect(response.status).toBe(201)
+        expect(response.body.data).toEqual({
+            id: expect.any(String),
+            name: "East Wing #3",
+            status: ParkingSlotStatus.ACTIVE,
+            status_reason: null,
+            createdAt: expect.any(String),
+            createdBy: "userFromSession",
+            updatedAt: expect.any(String),
+            updatedBy: "userFromSession",
+        })
+    })
 })

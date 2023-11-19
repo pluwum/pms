@@ -15,4 +15,11 @@ export const ParkingSlotRoutes = [
         action: "one",
         authenticate: false,
     },
+    {
+        method: "post",
+        route: "/parking-slots",
+        controller: ParkingSlotController,
+        action: "create",
+        authenticate: false,
+    },
 ]

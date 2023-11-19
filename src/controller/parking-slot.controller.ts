@@ -76,4 +76,32 @@ export class ParkingSlotController {
             statusCode: 200,
         }
     }
+
+    async update(request: Request, response: Response, next: NextFunction) {
+        const id = request.params.id
+
+        const parkingSlot = await this.parkingSlotRepository.findOne({
+            where: { id },
+        })
+
+        if (!parkingSlot) {
+            return { statusCode: 404, message: "Parking slot not found" }
+        }
+
+        const updates = request.body
+
+        this.parkingSlotRepository.merge(parkingSlot, updates)
+
+        try {
+            const newParkingSlot = await this.parkingSlotRepository.save(
+                parkingSlot
+            )
+            return {
+                data: newParkingSlot,
+                statusCode: 200,
+            }
+        } catch (error) {
+            return { message: error.message, statusCode: 500 }
+        }
+    }
 }

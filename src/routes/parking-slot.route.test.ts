@@ -102,4 +102,29 @@ describe("Route /parking-slots", () => {
             statusCode: 200,
         })
     })
+    it("PATCH /parking-slots/:id should update a parking slot", async () => {
+        const parkingSlot = await createParkingSlot()
+
+        const response = await request(server)
+            .patch(`/parking-slots/${parkingSlot.id}`)
+            .send({
+                name: "East Wing #5",
+                status: ParkingSlotStatus.INACTIVE,
+                status_reason: "testing",
+            })
+            .set("Content-Type", "application/json")
+            .set("Authorization", singleUser.token)
+
+        expect(response.status).toBe(200)
+        expect(response.body.data).toEqual({
+            id: expect.any(String),
+            name: "East Wing #5",
+            status: ParkingSlotStatus.INACTIVE,
+            status_reason: "testing",
+            createdAt: expect.any(String),
+            createdBy: "userFromSession",
+            updatedAt: expect.any(String),
+            updatedBy: "userFromSession",
+        })
+    })
 })

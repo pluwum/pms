@@ -29,4 +29,11 @@ export const ParkingSlotRoutes = [
         action: "remove",
         authenticate: false,
     },
+    {
+        method: "patch",
+        route: "/parking-slots/:id",
+        controller: ParkingSlotController,
+        action: "update",
+        authenticate: false,
+    },
 ]

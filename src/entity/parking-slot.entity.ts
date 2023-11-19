@@ -4,8 +4,8 @@ import {
     PrimaryGeneratedColumn,
     CreateDateColumn,
     UpdateDateColumn,
+    Unique,
 } from "typeorm"
-import { User } from "./user.entity"
 
 export enum ParkingSlotStatus {
     ACTIVE = "active",
@@ -13,12 +13,12 @@ export enum ParkingSlotStatus {
 }
 
 @Entity()
+@Unique(["name"])
 export class ParkingSlot {
     @Column()
     @PrimaryGeneratedColumn("uuid")
     id: string
 
-    //TODO: make this unique
     @Column()
     name: string
 

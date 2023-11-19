@@ -44,6 +44,28 @@ export class BookingController {
         }
     }
 
+    async remove(request: Request, response: Response, next: NextFunction) {
+        const id = request.params.id
+
+        let bookingToRemove = await this.bookingRepository.findOneBy({
+            id,
+        })
+
+        if (!bookingToRemove) {
+            return {
+                message: "This booking does not exist",
+                statusCode: 404,
+            }
+        }
+
+        await this.bookingRepository.remove(bookingToRemove)
+
+        return {
+            message: "Booking has been removed",
+            statusCode: 200,
+        }
+    }
+
     async create(request: Request, response: Response, next: NextFunction) {
         const today = new Date()
         const twoDaysLater = new Date()

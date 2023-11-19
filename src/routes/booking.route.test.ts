@@ -68,4 +68,23 @@ describe("Route /bookings", () => {
             updatedBy: expect.any(String),
         })
     })
+
+    it("DELETE /bookings/:id should remove a booking", async () => {
+        const parkingSlot = await createParkingSlot()
+        const booking = await createBooking({
+            parkingSlot,
+            owner: singleUser,
+        })
+
+        const response = await request(server)
+            .delete(`/bookings/${booking.id}`)
+            .set("Content-Type", "application/json")
+            .set("Authorization", singleUser.token)
+
+        expect(response.status).toBe(200)
+        expect(response.body).toEqual({
+            message: "Booking has been removed",
+            statusCode: 200,
+        })
+    })
 })

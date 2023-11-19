@@ -7,6 +7,7 @@ export enum UserRole {
 
 @Entity()
 @Unique(["email"])
+@Unique(["token"])
 export class User {
     @PrimaryGeneratedColumn("uuid")
     id: string
@@ -20,6 +21,12 @@ export class User {
     @Column()
     email: string
 
+    // @Column({
+    //     type: "enum",
+    //     enum: UserRole,
+    //     default: UserRole.STANDARD,
+    // })
+    // role: UserRole
     @Column()
     role: string
 

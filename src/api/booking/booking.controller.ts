@@ -5,6 +5,7 @@ import { formatValidationErrors, isAdmin } from "../../utils"
 import { plainToClass } from "class-transformer"
 import { CreateBookingDTO } from "./dto/createBooking.dto"
 import { validate } from "class-validator"
+import { UpdateBookingDTO } from "./dto/updateBooking.dto"
 
 export class BookingController {
     private bookingRepository = AppDataSource.getRepository(Booking)
@@ -143,9 +144,17 @@ export class BookingController {
             return { statusCode: 404, message: "Booking is not found" }
         }
 
-        const { slotId: slot, ...updates } = request.body
+        const bookingUpdates = plainToClass(UpdateBookingDTO, request.body)
 
-        this.bookingRepository.merge(booking, { slot, ...updates })
+        const errors = await validate(bookingUpdates)
+
+        if (errors.length > 0) {
+            return { message: formatValidationErrors(errors), statusCode: 400 }
+        }
+
+        const { slotId, ...updates } = bookingUpdates
+
+        this.bookingRepository.merge(booking, { slot: slotId, ...updates })
 
         try {
             const { slot: slotId, ...newBooking } =

@@ -18,7 +18,7 @@ describe("Route /parking-slots", () => {
         await createManyParkingSlots(fakeParkingSlots)
 
         const response = await request(server)
-            .get("/parking-slots/")
+            .get("/api/v1/parking-slots/")
             .set("Content-Type", "application/json")
             .set("x-api-token", singleUser.token)
 
@@ -49,7 +49,7 @@ describe("Route /parking-slots", () => {
     it("GET /parking-slots/:id should return a parking slot", async () => {
         const parkingSlot = await createParkingSlot()
         const response = await request(server)
-            .get(`/parking-slots/${parkingSlot.id}`)
+            .get(`/api/v1/parking-slots/${parkingSlot.id}`)
             .set("Content-Type", "application/json")
             .set("x-api-token", singleUser.token)
 
@@ -67,7 +67,7 @@ describe("Route /parking-slots", () => {
     })
     it("POST /parking-slots should create a parking slot", async () => {
         const response = await request(server)
-            .post("/parking-slots")
+            .post("/api/v1/parking-slots")
             .send({
                 name: "East Wing #3",
                 status: ParkingSlotStatus.ACTIVE,
@@ -92,7 +92,7 @@ describe("Route /parking-slots", () => {
         const parkingSlot = await createParkingSlot()
 
         const response = await request(server)
-            .delete(`/parking-slots/${parkingSlot.id}`)
+            .delete(`/api/v1/parking-slots/${parkingSlot.id}`)
             .set("Content-Type", "application/json")
             .set("x-api-token", singleUser.token)
 
@@ -106,7 +106,7 @@ describe("Route /parking-slots", () => {
         const parkingSlot = await createParkingSlot()
 
         const response = await request(server)
-            .patch(`/parking-slots/${parkingSlot.id}`)
+            .patch(`/api/v1/parking-slots/${parkingSlot.id}`)
             .send({
                 name: "East Wing #5",
                 status: ParkingSlotStatus.INACTIVE,

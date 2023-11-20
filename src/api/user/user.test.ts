@@ -10,7 +10,7 @@ describe("Route /users", () => {
     })
     it("should return all registered users", async () => {
         const response = await request(server)
-            .get("/users/")
+            .get("/api/v1/users/")
             .set("Content-Type", "application/json")
 
         expect(response.status).toBe(200)
@@ -18,7 +18,9 @@ describe("Route /users", () => {
     it("should delete a user", async () => {
         const user = await createUser()
 
-        const response = await request(server).delete(`/users/${user.id}`)
+        const response = await request(server).delete(
+            `/api/v1/users/${user.id}`
+        )
 
         expect(response.status).toBe(200)
     })

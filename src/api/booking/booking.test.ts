@@ -25,7 +25,7 @@ describe("Route /bookings", () => {
         await createManyBookings(singleParkingSlot, singleUser)
 
         const response = await request(server)
-            .get("/bookings/")
+            .get("/api/v1/bookings/")
             .set("Content-Type", "application/json")
             .set("x-api-token", singleUser.token)
 
@@ -37,7 +37,7 @@ describe("Route /bookings", () => {
         const { startsAt, endsAt } = createBookingStartAndEndDates()
         const parkingSlot = await createParkingSlot()
         const response = await request(server)
-            .post("/bookings")
+            .post("/api/v1/bookings")
             .send({
                 slotId: parkingSlot.id,
                 ownedBy: singleUser.id,
@@ -59,7 +59,7 @@ describe("Route /bookings", () => {
         const parkingSlot = await createParkingSlot()
         const booking = await createBooking({ parkingSlot, owner: singleUser })
         const response = await request(server)
-            .get(`/bookings/${booking.id}`)
+            .get(`/api/v1/bookings/${booking.id}`)
             .set("Content-Type", "application/json")
             .set("x-api-token", singleUser.token)
 
@@ -85,7 +85,7 @@ describe("Route /bookings", () => {
         })
 
         const response = await request(server)
-            .delete(`/bookings/${booking.id}`)
+            .delete(`/api/v1/bookings/${booking.id}`)
             .set("Content-Type", "application/json")
             .set("x-api-token", singleUser.token)
 
@@ -103,7 +103,7 @@ describe("Route /bookings", () => {
         })
         const secondParkingSlot = await createParkingSlot()
         const response = await request(server)
-            .patch(`/bookings/${booking.id}`)
+            .patch(`/api/v1/bookings/${booking.id}`)
             .send({
                 slotId: secondParkingSlot.id,
             })

@@ -6,9 +6,11 @@ import { plainToClass } from "class-transformer"
 import { CreateBookingDTO } from "./dto/createBooking.dto"
 import { validate } from "class-validator"
 import { UpdateBookingDTO } from "./dto/updateBooking.dto"
+import { BookingService } from "./booking.service"
 
 export class BookingController {
     private bookingRepository = AppDataSource.getRepository(Booking)
+    private bookingService = new BookingService()
 
     async all(request: Request, response: Response, next: NextFunction) {
         const where = isAdmin(request.user)
@@ -88,45 +90,21 @@ export class BookingController {
         if (errors.length > 0) {
             return { message: formatValidationErrors(errors), statusCode: 400 }
         }
-        if (createBookingDto.startsAt >= createBookingDto.endsAt) {
-            return {
-                message: "Start date must be before end date",
-                statusCode: 400,
-            }
-        }
-        if (createBookingDto.startsAt < new Date()) {
-            return {
-                message: "Start date must be in the future",
-                statusCode: 400,
-            }
-        }
-
-        const {
-            slotId,
-            ownedBy = request.user.id,
-            startsAt,
-            endsAt,
-        } = createBookingDto
-
-        const booking = Object.assign(new Booking(), {
-            slot: slotId,
-            ownedBy,
-            startsAt,
-            endsAt,
-            createdBy: request.user.id,
-            updatedBy: request.user.id,
-        })
 
         try {
-            const { slot, ...newBooking } = await this.bookingRepository.save(
-                booking
-            )
+            const newBooking = await this.bookingService.createBooking({
+                ...createBookingDto,
+                slotId: createBookingDto.slotId,
+                ownedBy: createBookingDto.ownedBy || request.user.id,
+                createdBy: request.user.id,
+                updatedBy: request.user.id,
+            })
             return {
-                data: { slotId: slot, ...newBooking },
+                data: newBooking,
                 statusCode: 201,
             }
         } catch (error) {
-            return { message: error.message, statusCode: 500 }
+            return { message: error.message, statusCode: error.statusCode }
         }
     }
 

@@ -110,39 +110,26 @@ export class BookingController {
 
     async update(request: Request, response: Response, next: NextFunction) {
         const id = request.params.id
-        const where = isAdmin(request.user)
-            ? {}
-            : { createdBy: request.user.id }
-
-        const booking = await this.bookingRepository.findOne({
-            where: { id, ...where },
-        })
-
-        if (!booking) {
-            return { statusCode: 404, message: "Booking is not found" }
-        }
-
         const bookingUpdates = plainToClass(UpdateBookingDTO, request.body)
-
         const errors = await validate(bookingUpdates)
 
         if (errors.length > 0) {
             return { message: formatValidationErrors(errors), statusCode: 400 }
         }
 
-        const { slotId, ...updates } = bookingUpdates
-
-        this.bookingRepository.merge(booking, { slot: slotId, ...updates })
-
         try {
-            const { slot: slotId, ...newBooking } =
-                await this.bookingRepository.save(booking)
+            const { slot: slotId, ...updatedBooking } =
+                await this.bookingService.updateBooking(
+                    id,
+                    bookingUpdates,
+                    request.user
+                )
             return {
-                data: { slotId, ...newBooking },
+                data: { slotId, ...updatedBooking },
                 statusCode: 200,
             }
         } catch (error) {
-            return { message: error.message, statusCode: 500 }
+            return { message: error.message, statusCode: error.statusCode }
         }
     }
 }

@@ -38,4 +38,22 @@ export class ParkingSlotService {
             })
         }
     }
+
+    async getParkingSlotById(parkingSlotId): Promise<ParkingSlot> {
+        const parkingSlot = await this.parkingSlotRepository.findOne({
+            where: { id: parkingSlotId },
+        })
+
+        if (!parkingSlot) {
+            throw new OperationFailedException({
+                message: "Parking slot is not found",
+                statusCode: 404,
+            })
+        }
+
+        return parkingSlot
+    }
+    async getParkingSlots(): Promise<ParkingSlot[]> {
+        return await this.parkingSlotRepository.find()
+    }
 }

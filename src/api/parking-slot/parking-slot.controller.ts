@@ -12,10 +12,10 @@ export class ParkingSlotController {
     private parkingSlotService = new ParkingSlotService()
 
     async all(request: Request, response: Response, next: NextFunction) {
-        const parkingSlot = await this.parkingSlotRepository.find()
+        const parkingSlots = await this.parkingSlotService.getParkingSlots()
 
         return {
-            data: parkingSlot,
+            data: parkingSlots,
             statusCode: 200,
         }
     }
@@ -23,14 +23,13 @@ export class ParkingSlotController {
     async one(request: Request, response: Response, next: NextFunction) {
         const id = request.params.id
 
-        const parkingSlot = await this.parkingSlotRepository.findOne({
-            where: { id },
-        })
-
-        if (!parkingSlot) {
-            return { statusCode: 404, message: "Parking slot not found" }
+        try {
+            const parkingSlot =
+                await this.parkingSlotService.getParkingSlotById(id)
+            return { data: parkingSlot, statusCode: 200 }
+        } catch (error) {
+            return { message: error.message, statusCode: error.statusCode }
         }
-        return { data: parkingSlot, statusCode: 200 }
     }
 
     async create(request: Request, response: Response, next: NextFunction) {

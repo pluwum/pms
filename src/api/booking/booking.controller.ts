@@ -48,13 +48,12 @@ export class BookingController {
 
         try {
             await this.bookingService.deleteBooking(id, request.user)
+            return {
+                message: "Booking has been removed",
+                statusCode: 200,
+            }
         } catch (error) {
             return { message: error.message, statusCode: error.statusCode }
-        }
-
-        return {
-            message: "Booking has been removed",
-            statusCode: 200,
         }
     }
 

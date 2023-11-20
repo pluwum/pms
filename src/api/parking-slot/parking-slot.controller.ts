@@ -1,9 +1,15 @@
 import { AppDataSource } from "../../data-source"
 import { NextFunction, Request, Response } from "express"
 import { ParkingSlot, ParkingSlotStatus } from "./parking-slot.entity"
+import { plainToClass } from "class-transformer"
+import { CreateParkingSlotDTO } from "./dto/createParkingSlot.dto"
+import { validate } from "class-validator"
+import { formatValidationErrors } from "../../utils"
+import { ParkingSlotService } from "./parking-slot.service"
 
 export class ParkingSlotController {
     private parkingSlotRepository = AppDataSource.getRepository(ParkingSlot)
+    private parkingSlotService = new ParkingSlotService()
 
     async all(request: Request, response: Response, next: NextFunction) {
         const parkingSlot = await this.parkingSlotRepository.find()
@@ -28,30 +34,30 @@ export class ParkingSlotController {
     }
 
     async create(request: Request, response: Response, next: NextFunction) {
-        const {
-            name,
-            status = ParkingSlotStatus.ACTIVE,
-            status_reason = null,
-        } = request.body
+        const parkingSlotDto = plainToClass(CreateParkingSlotDTO, request.body)
 
-        const parkingSlot = Object.assign(new ParkingSlot(), {
-            createdBy: request.user.id,
-            updatedBy: request.user.id,
-            name,
-            status,
-            status_reason,
-        })
+        const errors = await validate(parkingSlotDto)
+
+        if (errors.length > 0) {
+            return { message: formatValidationErrors(errors), statusCode: 400 }
+        }
 
         try {
-            const newParkingSlot = await this.parkingSlotRepository.save(
-                parkingSlot
+            const parkingSlot = await this.parkingSlotService.createParkingSlot(
+                {
+                    ...parkingSlotDto,
+                    status: parkingSlotDto.status || ParkingSlotStatus.ACTIVE,
+                    createdBy: request.user.id,
+                    updatedBy: request.user.id,
+                }
             )
+
             return {
-                data: newParkingSlot,
+                data: parkingSlot,
                 statusCode: 201,
             }
         } catch (error) {
-            return { message: error.message, statusCode: 500 }
+            return { message: error.message, statusCode: error.statusCode }
         }
     }
 

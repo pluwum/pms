@@ -22,3 +22,7 @@ export const formatValidationErrors = (errors: ValidationError[]) => {
     })
     return formattedErrors
 }
+
+export const isFutureDate = (dateString) => {
+    return new Date(dateString).getTime() > new Date().getTime()
+}

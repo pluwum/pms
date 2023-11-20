@@ -13,13 +13,7 @@ export class BookingController {
     private bookingService = new BookingService()
 
     async all(request: Request, response: Response, next: NextFunction) {
-        const where = isAdmin(request.user)
-            ? {}
-            : { createdBy: request.user.id }
-        const bookings = await this.bookingRepository.find({
-            where,
-            relations: ["slot", "ownedBy"],
-        })
+        const bookings = await this.bookingService.getBookings(request.user)
 
         const modifiedBookings = bookings.map(
             ({ slot, ownedBy, ...booking }) => {

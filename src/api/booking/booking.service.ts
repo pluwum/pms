@@ -110,4 +110,14 @@ export class BookingService {
             })
         }
     }
+
+    async getBookings(user): Promise<Booking[]> {
+        const where = isAdmin(user) ? {} : { createdBy: user.id }
+        const bookings = await this.bookingRepository.find({
+            where,
+            relations: ["slot", "ownedBy"],
+        })
+
+        return bookings
+    }
 }

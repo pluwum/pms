@@ -120,4 +120,21 @@ export class BookingService {
 
         return bookings
     }
+
+    async getBookingById(bookingId, user): Promise<Booking> {
+        const where = isAdmin(user) ? {} : { createdBy: user.id }
+        const booking = await this.bookingRepository.findOne({
+            where: { id: bookingId, ...where },
+            relations: ["slot", "ownedBy"],
+        })
+
+        if (!booking) {
+            throw new NotFoundException({
+                statusCode: 404,
+                message: "Booking is not found",
+            })
+        }
+
+        return booking
+    }
 }

@@ -1,6 +1,4 @@
-import { AppDataSource } from "../../data-source"
 import { NextFunction, Request, Response } from "express"
-import { Booking } from "./booking.entity"
 import { formatValidationErrors, isAdmin } from "../../utils"
 import { plainToClass } from "class-transformer"
 import { CreateBookingDTO } from "./dto/createBooking.dto"
@@ -9,7 +7,6 @@ import { UpdateBookingDTO } from "./dto/updateBooking.dto"
 import { BookingService } from "./booking.service"
 
 export class BookingController {
-    private bookingRepository = AppDataSource.getRepository(Booking)
     private bookingService = new BookingService()
 
     async all(request: Request, response: Response, next: NextFunction) {
@@ -33,18 +30,12 @@ export class BookingController {
 
     async one(request: Request, response: Response, next: NextFunction) {
         const id = request.params.id
-        const where = isAdmin(request.user)
-            ? {}
-            : { createdBy: request.user.id }
 
-        const booking = await this.bookingRepository.findOne({
-            where: { id, ...where },
-            relations: ["slot", "ownedBy"],
-        })
+        const booking = await this.bookingService.getBookingById(
+            id,
+            request.user
+        )
 
-        if (!booking) {
-            return { statusCode: 404, message: "Booking not found" }
-        }
         const { ownedBy, slot, ...rest } = booking
         return {
             data: { ownedBy: ownedBy.id, slotId: slot.id, ...rest },

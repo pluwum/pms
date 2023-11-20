@@ -16,4 +16,26 @@ export class ParkingSlotService {
             })
         }
     }
+
+    async deleteParkingSlot(parkingSlotId): Promise<void> {
+        const parkingSlot = await this.parkingSlotRepository.findOne({
+            where: { id: parkingSlotId },
+        })
+
+        if (!parkingSlot) {
+            throw new OperationFailedException({
+                message: "Parking slot is not found",
+                statusCode: 404,
+            })
+        }
+
+        try {
+            await this.parkingSlotRepository.remove(parkingSlot)
+        } catch (error) {
+            throw new OperationFailedException({
+                message: error.message,
+                statusCode: 500,
+            })
+        }
+    }
 }

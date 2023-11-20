@@ -98,7 +98,7 @@ describe("Route /parking-slots", () => {
 
         expect(response.status).toBe(200)
         expect(response.body).toEqual({
-            message: "parking slot has been removed",
+            message: "Parking slot has been removed",
             statusCode: 200,
         })
     })

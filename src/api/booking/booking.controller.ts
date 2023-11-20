@@ -60,22 +60,12 @@ export class BookingController {
 
     async remove(request: Request, response: Response, next: NextFunction) {
         const id = request.params.id
-        const where = isAdmin(request.user)
-            ? {}
-            : { createdBy: request.user.id }
-        let bookingToRemove = await this.bookingRepository.findOneBy({
-            id,
-            ...where,
-        })
 
-        if (!bookingToRemove) {
-            return {
-                message: "This booking does not exist",
-                statusCode: 404,
-            }
+        try {
+            await this.bookingService.deleteBooking(id, request.user)
+        } catch (error) {
+            return { message: error.message, statusCode: error.statusCode }
         }
-
-        await this.bookingRepository.remove(bookingToRemove)
 
         return {
             message: "Booking has been removed",

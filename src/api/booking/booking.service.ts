@@ -20,6 +20,15 @@ export class OperationFailedException extends Error {
         this.name = "OperationFailedException"
     }
 }
+export class NotFoundException extends Error {
+    public statusCode: number
+
+    constructor({ message, statusCode }) {
+        super(message)
+        this.statusCode = statusCode
+        this.name = "NotFoundException"
+    }
+}
 export class BookingService {
     private bookingRepository = AppDataSource.getRepository(Booking)
 
@@ -57,7 +66,7 @@ export class BookingService {
         })
 
         if (!booking) {
-            throw new OperationFailedException({
+            throw new NotFoundException({
                 statusCode: 404,
                 message: "Booking is not found",
             })
@@ -70,6 +79,30 @@ export class BookingService {
         try {
             const updatedBooking = await this.bookingRepository.save(booking)
             return updatedBooking
+        } catch (error) {
+            throw new OperationFailedException({
+                message: error.message,
+                statusCode: 500,
+            })
+        }
+    }
+    async deleteBooking(bookingId, user): Promise<Booking> {
+        const where = isAdmin(user) ? {} : { createdBy: user.id }
+
+        const booking = await this.bookingRepository.findOne({
+            where: { id: bookingId, ...where },
+        })
+
+        if (!booking) {
+            throw new NotFoundException({
+                statusCode: 404,
+                message: "Booking is not found",
+            })
+        }
+
+        try {
+            const deletedBooking = await this.bookingRepository.remove(booking)
+            return deletedBooking
         } catch (error) {
             throw new OperationFailedException({
                 message: error.message,

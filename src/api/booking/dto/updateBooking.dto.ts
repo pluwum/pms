@@ -4,6 +4,7 @@ import { User } from "../../user/user.entity"
 
 export class UpdateBookingDTO {
     @IsUUID()
+    @IsOptional()
     slotId: ParkingSlot
 
     @IsOptional()

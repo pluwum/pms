@@ -60,9 +60,11 @@ export const createBookingStartAndEndDates = (): {
 } => {
     const today = new Date()
     const twoDaysLater = new Date()
+    const oneDayLater = new Date()
 
     twoDaysLater.setDate(today.getDate() + 2)
-    return { startsAt: today, endsAt: twoDaysLater }
+    oneDayLater.setDate(today.getDate() + 1)
+    return { startsAt: oneDayLater, endsAt: twoDaysLater }
 }
 
 export const createManyBookings = async (parkingSlot, owner): Promise<void> => {

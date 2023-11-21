@@ -48,7 +48,6 @@ describe("Route /bookings", () => {
             .set("x-api-token", singleUser.token)
 
         expect(response.status).toBe(201)
-
         expect(response.body.data).toMatchObject({
             slotId: parkingSlot.id,
             ownedBy: singleUser.id,
@@ -65,15 +64,15 @@ describe("Route /bookings", () => {
 
         expect(response.status).toBe(200)
         expect(response.body.data).toEqual({
-            id: expect.any(String),
-            slotId: expect.any(String),
-            ownedBy: expect.any(String),
-            startsAt: expect.any(String),
-            endsAt: expect.any(String),
-            createdAt: expect.any(String),
-            createdBy: expect.any(String),
-            updatedAt: expect.any(String),
-            updatedBy: expect.any(String),
+            id: booking.id,
+            slotId: booking.slotId,
+            ownedBy: booking.ownedBy.id,
+            startsAt: booking.startsAt.toISOString(),
+            endsAt: booking.endsAt.toISOString(),
+            createdAt: booking.createdAt.toISOString(),
+            createdBy: booking.createdBy,
+            updatedAt: booking.updatedAt.toISOString(),
+            updatedBy: booking.updatedBy,
         })
     })
 
@@ -95,6 +94,7 @@ describe("Route /bookings", () => {
             statusCode: 200,
         })
     })
+
     it("PATCH /bookings/:id should update a parking slot", async () => {
         const firstParkingSlot = await createParkingSlot()
         const booking = await createBooking({

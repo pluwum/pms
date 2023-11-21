@@ -12,13 +12,11 @@ export class BookingService {
 
     async createBooking(bookingData): Promise<Booking> {
         this.validateDates(bookingData.startsAt, bookingData.endsAt)
-        await this.validateSlotAvailability(
-            bookingData.slot,
-            bookingData.startsAt,
-            bookingData.endsAt
-        )
-
-        const newBooking = Object.assign(new Booking(), bookingData)
+        await this.validateSlotAvailability({
+            slotId: bookingData.slotId,
+            startsAt: bookingData.startsAt,
+            endsAt: bookingData.endsAt,
+        })
 
         try {
             const booking = await this.bookingRepository.save(bookingData)
@@ -47,6 +45,15 @@ export class BookingService {
         const { slotId, ...updates } = bookingUpdates
 
         this.bookingRepository.merge(booking, updates)
+
+        this.validateDates(booking.startsAt, booking.endsAt)
+
+        await this.validateSlotAvailability({
+            slotId: booking.slotId,
+            startsAt: booking.startsAt,
+            endsAt: booking.endsAt,
+            bookingId: booking.id,
+        })
 
         try {
             const updatedBooking = await this.bookingRepository.save(booking)
@@ -110,16 +117,23 @@ export class BookingService {
         return booking
     }
 
-    async isSlotAvailable(
-        slotId: number,
-        startsAt: Date,
+    async isSlotAvailable({
+        slotId,
+        startsAt,
+        endsAt,
+        bookingId = null,
+    }: {
+        slotId: string
+        startsAt: Date
         endsAt: Date
-    ): Promise<boolean> {
+        bookingId?: string
+    }): Promise<boolean> {
         const overlappingBooking = await this.bookingRepository
             .createQueryBuilder("booking")
             .where("booking.slot = :slotId", { slotId })
             .andWhere("booking.startsAt < :endDate", { endsAt })
             .andWhere("booking.endsAt > :startDate", { startsAt })
+            .andWhere("booking.id != :bookingId", { bookingId })
             .getOne()
 
         return !overlappingBooking
@@ -141,12 +155,25 @@ export class BookingService {
         }
     }
 
-    private async validateSlotAvailability(
-        slotId: number,
-        startsAt: Date,
+    private async validateSlotAvailability({
+        slotId,
+        startsAt,
+        endsAt,
+        bookingId = null,
+    }: {
+        slotId: string
+        startsAt: Date
         endsAt: Date
-    ) {
-        if (!(await this.isSlotAvailable(slotId, startsAt, endsAt))) {
+        bookingId?: string
+    }) {
+        if (
+            !(await this.isSlotAvailable({
+                slotId,
+                startsAt,
+                endsAt,
+                bookingId,
+            }))
+        ) {
             throw new BadInputException({
                 message: "Slot is not available",
                 statusCode: 400,

@@ -1,0 +1,441 @@
+openapi: 3.0.0
+info:
+    title: Booking API
+    version: 1.0.0
+
+tags:
+    - name: Users
+      description: Operations related to user management
+    - name: Bookings
+      description: Operations related to managing bookings
+    - name: Parking Slots
+      description: Operations related to parking slot management
+servers:
+    - url: http://localhost:8000
+      description: Local server
+
+paths:
+    /api/v1/bookings:
+        post:
+            tags:
+                - Bookings
+            summary: Create a new booking
+            operationId: createBooking
+            security:
+                - ApiKeyAuth: []
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Booking"
+            responses:
+                "200":
+                    description: A booking object
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/GetOneBooking"
+        get:
+            tags:
+                - Bookings
+            summary: Get all bookings
+            operationId: getAllBookings
+            security:
+                - ApiKeyAuth: []
+            responses:
+                "200":
+                    description: An array of booking objects
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/GetAllBookings"
+    /api/v1/bookings/{id}:
+        get:
+            tags:
+                - Bookings
+            summary: Get a booking by ID
+            operationId: getBookingById
+            security:
+                - ApiKeyAuth: []
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                "200":
+                    description: A booking object
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/GetOneBooking"
+        delete:
+            tags:
+                - Bookings
+            summary: Delete a booking by ID
+            operationId: deleteBooking
+            security:
+                - ApiKeyAuth: []
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                "200":
+                    description: Booking deleted
+        patch:
+            tags:
+                - Bookings
+            summary: Update a booking by ID
+            operationId: updateBooking
+            security:
+                - ApiKeyAuth: []
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/GetOneBooking"
+            responses:
+                "200":
+                    description: Booking updated
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Booking"
+
+    /api/v1/parking-slots:
+        get:
+            tags:
+                - Parking Slots
+            summary: Get all parking slots
+            operationId: getAllParkingSlots
+            security:
+                - ApiKeyAuth: []
+            responses:
+                "200":
+                    description: An array of parking slot objects
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/ParkingSlot"
+        post:
+            tags:
+                - Parking Slots
+            summary: Create a new parking slot
+            operationId: createParkingSlot
+            security:
+                - ApiKeyAuth: []
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ParkingSlot"
+            responses:
+                "200":
+                    description: A parking slot object
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ParkingSlot"
+    /api/v1/parking-slots/{id}:
+        get:
+            tags:
+                - Parking Slots
+            summary: Get a parking slot by ID
+            operationId: getParkingSlotById
+            security:
+                - ApiKeyAuth: []
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                "200":
+                    description: A parking slot object
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ParkingSlot"
+        delete:
+            tags:
+                - Parking Slots
+            summary: Delete a parking slot by ID
+            operationId: deleteParkingSlot
+            security:
+                - ApiKeyAuth: []
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                "200":
+                    description: Parking slot deleted
+        patch:
+            tags:
+                - Parking Slots
+            summary: Update a parking slot by ID
+            operationId: updateParkingSlot
+            security:
+                - ApiKeyAuth: []
+            parameters:
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ParkingSlot"
+            responses:
+                "200":
+                    description: Parking slot updated
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ParkingSlot"
+
+    /api/v1/users:
+        get:
+            tags:
+                - Users
+            summary: Get a list of all users
+            responses:
+                "200":
+                    description: A list of users
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/GetAllUsersResponse"
+        post:
+            tags:
+                - Users
+            summary: Create a new user
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/CreateUser"
+            responses:
+                "201":
+                    description: User created successfully
+
+    /api/v1/users/{userId}:
+        get:
+            tags:
+                - Users
+            summary: Get a user by ID
+            parameters:
+                - in: path
+                  name: userId
+                  required: true
+                  schema:
+                      type: string
+                  description: The user ID
+            responses:
+                "200":
+                    description: Details of the user
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/GetOneUserResponse"
+        delete:
+            tags:
+                - Users
+            summary: Delete a user
+            parameters:
+                - in: path
+                  name: userId
+                  required: true
+                  schema:
+                      type: string
+                  description: The user ID
+            responses:
+                "204":
+                    description: User deleted successfully
+
+components:
+    schemas:
+        Booking:
+            type: object
+            properties:
+                id:
+                    type: string
+                    format: uuid
+                    description: Unique identifier for the booking
+                slotId:
+                    type: string
+                    description: Identifier of the parking slot being booked
+                ownedBy:
+                    type: string
+                    description: Identifier of the User who owns the booking
+                startsAt:
+                    type: string
+                    format: date-time
+                    description: Start date and time of the booking
+                endsAt:
+                    type: string
+                    format: date-time
+                    description: End date and time of the booking
+
+        ParkingSlot:
+            type: object
+            properties:
+                id:
+                    type: string
+                    format: uuid
+                    description: Unique identifier for the parking slot
+                name:
+                    type: string
+                    description: Name of the parking slot
+                status:
+                    type: string
+                    description: Current status of the parking slot
+                status_reason:
+                    type: string
+                    nullable: true
+                    description: Reason for the current status of the parking slot
+
+        User:
+            type: object
+            properties:
+                firstName:
+                    type: string
+                    description: First name of the user
+                lastName:
+                    type: string
+                    description: Last name of the user
+                email:
+                    type: string
+                    format: email
+                    description: Email address of the user
+                role:
+                    type: string
+                    description: Role of the user
+        UserIdAndToken:
+            type: object
+            properties:
+                id:
+                    type: string
+                    format: uuid
+                    description: Unique identifier for the user
+                token:
+                    type: string
+                    description: API token for the user
+
+        GetOneUserResponse:
+            type: object
+            properties:
+                data:
+                    type: object
+                    allOf:
+                        - $ref: "#/components/schemas/User"
+                        - $ref: "#/components/schemas/UserIdAndToken"
+
+                message:
+                    type: string
+                statusCode:
+                    type: string
+                    description: Http status code of operation
+        GetAllUsersResponse:
+            type: object
+            properties:
+                data:
+                    type: array
+                    items:
+                        type: object
+                        allOf:
+                            - $ref: "#/components/schemas/User"
+                            - $ref: "#/components/schemas/UserIdAndToken"
+                    description: List of users
+                message:
+                    type: string
+                statusCode:
+                    type: string
+                    description: Http status code of operation
+
+        CreateUser:
+            type: object
+            allOf:
+                - $ref: "#/components/schemas/User"
+                - properties:
+                      token:
+                          type: string
+                          description: API token for the user
+
+        UpdateAndCreateInfo:
+            type: object
+            properties:
+                createdBy:
+                    type: string
+                    description: Identifier of the user who created the resource
+                createdAt:
+                    type: string
+                    format: date-time
+                    description: Date and time when the resource was created
+                updatedBy:
+                    type: string
+                    nullable: true
+                    description: Identifier of the user who last updated the resource
+                updatedAt:
+                    type: string
+                    format: date-time
+                    nullable: true
+                    description: Date and time when the resource was last updated
+        GetOneBooking:
+            type: object
+            properties:
+                data:
+                    type: object
+                    allOf:
+                        - $ref: "#/components/schemas/Booking"
+                        - $ref: "#/components/schemas/UpdateAndCreateInfo"
+                message:
+                    type: string
+                statusCode:
+                    type: string
+                    description: Http status code of operation
+        GetAllBookings:
+            type: object
+            properties:
+                data:
+                    type: array
+                    items:
+                        type: object
+                        allOf:
+                            - $ref: "#/components/schemas/Booking"
+                            - $ref: "#/components/schemas/UpdateAndCreateInfo"
+                    description: List of bookings
+                message:
+                    type: string
+                statusCode:
+                    type: string
+                    description: Http status code of operation
+    securitySchemes:
+        ApiKeyAuth:
+            type: apiKey
+            in: header
+            name: x-api-token

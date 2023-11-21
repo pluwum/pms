@@ -37,6 +37,7 @@ export class BookingController {
         )
 
         const { ownedBy, slot, ...rest } = booking
+
         return {
             data: { ownedBy: ownedBy.id, slotId: slot.id, ...rest },
             statusCode: 200,
@@ -68,7 +69,7 @@ export class BookingController {
         try {
             const newBooking = await this.bookingService.createBooking({
                 ...createBookingDto,
-                slotId: createBookingDto.slotId,
+                slot: createBookingDto.slotId,
                 ownedBy: createBookingDto.ownedBy || request.user.id,
                 createdBy: request.user.id,
                 updatedBy: request.user.id,

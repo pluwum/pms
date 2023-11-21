@@ -28,6 +28,7 @@ export const singleBooking = {
     createdBy: "userFromSession",
     updatedAt: new Date(),
     updatedBy: "userFromSession",
+    slotId: "new ParkingSlot()", //
     slot: new ParkingSlot(), //
     ownedBy: new User(),
     startsAt: new Date(),

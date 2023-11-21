@@ -15,10 +15,13 @@ export class Booking {
     @PrimaryGeneratedColumn("uuid")
     id: string
 
-    @ManyToOne(() => ParkingSlot, (slot) => slot.id)
+    @Column({ nullable: false })
+    slotId: string
+
+    @ManyToOne(() => ParkingSlot, (slot) => slot.id, { nullable: false })
     slot: ParkingSlot
 
-    @ManyToOne((type) => User, (user) => user.id)
+    @ManyToOne((type) => User, (user) => user.id, { nullable: false })
     ownedBy: User
 
     @Column()

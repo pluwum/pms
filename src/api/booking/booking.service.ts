@@ -46,7 +46,7 @@ export class BookingService {
 
         const { slotId, ...updates } = bookingUpdates
 
-        this.bookingRepository.merge(booking, { slot: slotId, ...updates })
+        this.bookingRepository.merge(booking, updates)
 
         try {
             const updatedBooking = await this.bookingRepository.save(booking)
@@ -87,7 +87,7 @@ export class BookingService {
         const where = isAdmin(user) ? {} : { createdBy: user.id }
         const bookings = await this.bookingRepository.find({
             where,
-            relations: ["slot", "ownedBy"],
+            relations: ["ownedBy"],
         })
 
         return bookings
@@ -97,7 +97,7 @@ export class BookingService {
         const where = isAdmin(user) ? {} : { createdBy: user.id }
         const booking = await this.bookingRepository.findOne({
             where: { id: bookingId, ...where },
-            relations: ["slot", "ownedBy"],
+            relations: ["ownedBy"],
         })
 
         if (!booking) {

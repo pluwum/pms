@@ -12,15 +12,12 @@ export class BookingController {
     async all(request: Request, response: Response, next: NextFunction) {
         const bookings = await this.bookingService.getBookings(request.user)
 
-        const modifiedBookings = bookings.map(
-            ({ slot, ownedBy, ...booking }) => {
-                return {
-                    ...booking,
-                    slotId: slot.id,
-                    ownedBy: ownedBy.id,
-                }
+        const modifiedBookings = bookings.map(({ ownedBy, ...booking }) => {
+            return {
+                ...booking,
+                ownedBy: ownedBy.id,
             }
-        )
+        })
 
         return {
             data: modifiedBookings,
@@ -36,10 +33,10 @@ export class BookingController {
             request.user
         )
 
-        const { ownedBy, slot, ...rest } = booking
+        const { ownedBy, ...rest } = booking
 
         return {
-            data: { ownedBy: ownedBy.id, slotId: slot.id, ...rest },
+            data: { ownedBy: ownedBy.id, ...rest },
             statusCode: 200,
         }
     }
@@ -69,7 +66,6 @@ export class BookingController {
         try {
             const newBooking = await this.bookingService.createBooking({
                 ...createBookingDto,
-                slot: createBookingDto.slotId,
                 ownedBy: createBookingDto.ownedBy || request.user.id,
                 createdBy: request.user.id,
                 updatedBy: request.user.id,
@@ -93,14 +89,13 @@ export class BookingController {
         }
 
         try {
-            const { slot: slotId, ...updatedBooking } =
-                await this.bookingService.updateBooking(
-                    id,
-                    bookingUpdates,
-                    request.user
-                )
+            const updatedBooking = await this.bookingService.updateBooking(
+                id,
+                bookingUpdates,
+                request.user
+            )
             return {
-                data: { slotId, ...updatedBooking },
+                data: updatedBooking,
                 statusCode: 200,
             }
         } catch (error) {

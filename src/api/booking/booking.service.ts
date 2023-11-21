@@ -11,23 +11,17 @@ export class BookingService {
     private bookingRepository = AppDataSource.getRepository(Booking)
 
     async createBooking(bookingData): Promise<Booking> {
-        if (bookingData.startsAt >= bookingData.endsAt) {
-            throw new BadInputException({
-                message: "Start date must be before end date",
-                statusCode: 400,
-            })
-        }
-        if (bookingData.startsAt < new Date()) {
-            throw new BadInputException({
-                message: "Start date must be in the future",
-                statusCode: 400,
-            })
-        }
+        this.validateDates(bookingData.startsAt, bookingData.endsAt)
+        await this.validateSlotAvailability(
+            bookingData.slot,
+            bookingData.startsAt,
+            bookingData.endsAt
+        )
 
         const newBooking = Object.assign(new Booking(), bookingData)
 
         try {
-            const booking = await this.bookingRepository.save(newBooking)
+            const booking = await this.bookingRepository.save(bookingData)
             return booking
         } catch (error) {
             throw new OperationFailedException({
@@ -114,5 +108,49 @@ export class BookingService {
         }
 
         return booking
+    }
+
+    async isSlotAvailable(
+        slotId: number,
+        startsAt: Date,
+        endsAt: Date
+    ): Promise<boolean> {
+        const overlappingBooking = await this.bookingRepository
+            .createQueryBuilder("booking")
+            .where("booking.slot = :slotId", { slotId })
+            .andWhere("booking.startsAt < :endDate", { endsAt })
+            .andWhere("booking.endsAt > :startDate", { startsAt })
+            .getOne()
+
+        return !overlappingBooking
+    }
+
+    private validateDates(startsAt: Date, endsAt: Date) {
+        if (startsAt >= endsAt) {
+            throw new BadInputException({
+                message: "Start date must be before end date",
+                statusCode: 400,
+            })
+        }
+
+        if (startsAt < new Date()) {
+            throw new BadInputException({
+                message: "Start date must be in the future",
+                statusCode: 400,
+            })
+        }
+    }
+
+    private async validateSlotAvailability(
+        slotId: number,
+        startsAt: Date,
+        endsAt: Date
+    ) {
+        if (!(await this.isSlotAvailable(slotId, startsAt, endsAt))) {
+            throw new BadInputException({
+                message: "Slot is not available",
+                statusCode: 400,
+            })
+        }
     }
 }

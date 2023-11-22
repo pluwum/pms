@@ -1,6 +1,6 @@
+import { type ControllerRoute } from "../types"
 import { UserController } from "./user.controller"
 import { UserRole } from "./user.entity"
-import { type ControllerRoute } from "../types"
 
 const permissions = [UserRole.ADMIN]
 export const UserRoutes: ControllerRoute[] = [

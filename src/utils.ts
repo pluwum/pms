@@ -1,6 +1,6 @@
-import crypto from "crypto"
-import { type User, UserRole } from "./api/user/user.entity"
 import { type ValidationError } from "class-validator"
+import crypto from "crypto"
+import { UserRole, type User } from "./api/user/user.entity"
 
 export const generateToken = (length = 48): string => {
   return crypto.randomBytes(length).toString("hex")

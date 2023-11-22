@@ -1,18 +1,18 @@
 /* eslint-disable new-cap */
+import * as bodyParser from "body-parser"
+import cors from "cors"
+import dotenv from "dotenv"
 import express, {
   type Express,
+  type NextFunction,
   type Request,
   type Response,
-  type NextFunction,
 } from "express"
-import * as bodyParser from "body-parser"
-import routes from "./api/routes"
-import cors from "cors"
-import { authenticate, authorize } from "./api/middleware"
-import dotenv from "dotenv"
+import path from "path"
 import swaggerUi from "swagger-ui-express"
 import yaml from "yamljs"
-import path from "path"
+import { authenticate, authorize } from "./api/middleware"
+import routes from "./api/routes"
 
 dotenv.config()
 const server: Express = express()

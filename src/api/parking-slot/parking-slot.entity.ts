@@ -1,10 +1,10 @@
 import {
-  Entity,
   Column,
-  PrimaryGeneratedColumn,
   CreateDateColumn,
-  UpdateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
   Unique,
+  UpdateDateColumn,
 } from "typeorm"
 
 export enum ParkingSlotStatus {

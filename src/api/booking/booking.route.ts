@@ -1,6 +1,6 @@
-import { BookingController } from "./booking.controller"
-import { UserRole } from "../user/user.entity"
 import { type ControllerRoute } from "../types"
+import { UserRole } from "../user/user.entity"
+import { BookingController } from "./booking.controller"
 
 const permissions = [UserRole.STANDARD, UserRole.ADMIN]
 export const BookingRoutes: ControllerRoute[] = [

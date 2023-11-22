@@ -1,10 +1,10 @@
-import { AppDataSource } from "../data-source"
+import "reflect-metadata"
+import { v4 as uuidv4 } from "uuid"
 import {
   ParkingSlot,
   ParkingSlotStatus,
 } from "../api/parking-slot/parking-slot.entity"
-import "reflect-metadata"
-import { v4 as uuidv4 } from "uuid"
+import { AppDataSource } from "../data-source"
 
 export const fakeParkingSlots: ParkingSlot[] = [
   {

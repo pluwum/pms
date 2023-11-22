@@ -1,11 +1,11 @@
+import { plainToClass } from "class-transformer"
+import { validate } from "class-validator"
 import { type Request } from "express"
 import { formatValidationErrors } from "../../utils"
-import { plainToClass } from "class-transformer"
-import { CreateBookingDTO } from "./dto/createBooking.dto"
-import { validate } from "class-validator"
-import { UpdateBookingDTO } from "./dto/updateBooking.dto"
-import { BookingService } from "./booking.service"
 import { type RouteHandlerResponse } from "../types"
+import { BookingService } from "./booking.service"
+import { CreateBookingDTO } from "./dto/createBooking.dto"
+import { UpdateBookingDTO } from "./dto/updateBooking.dto"
 
 export class BookingController {
   private readonly bookingService = new BookingService()

@@ -1,4 +1,4 @@
-import { IsOptional, IsString, IsEnum } from "class-validator"
+import { IsEnum, IsOptional, IsString } from "class-validator"
 import { ParkingSlotStatus } from "../parking-slot.entity"
 
 export class CreateParkingSlotDTO {

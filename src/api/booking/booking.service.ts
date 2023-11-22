@@ -2,8 +2,8 @@ import { AppDataSource } from "../../data-source"
 import { isAdmin } from "../../utils"
 import {
   BadInputException,
-  OperationFailedException,
   NotFoundException,
+  OperationFailedException,
 } from "../exceptions"
 import { Booking } from "./booking.entity"
 

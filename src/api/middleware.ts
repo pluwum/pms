@@ -1,6 +1,6 @@
 import { AppDataSource } from "../data-source"
-import { User } from "./user/user.entity"
 import { type ControllerRoute } from "./types"
+import { User } from "./user/user.entity"
 
 export const authenticate =
   (route: ControllerRoute) => async (req, res, next) => {

@@ -1,5 +1,4 @@
 import request from "supertest"
-import server from "../../server"
 import { initializeDb } from "../../data-source"
 import {
   createManyParkingSlots,
@@ -7,6 +6,7 @@ import {
   fakeParkingSlots,
 } from "../../scripts/parking-slot"
 import { createUser, singleUser } from "../../scripts/users"
+import server from "../../server"
 import { ParkingSlotStatus } from "./parking-slot.entity"
 
 describe("Route /parking-slots", () => {

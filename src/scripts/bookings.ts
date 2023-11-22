@@ -1,9 +1,9 @@
-import { AppDataSource } from "../data-source"
-import { Booking } from "../api/booking/booking.entity"
 import "reflect-metadata"
 import { v4 as uuidv4 } from "uuid"
+import { Booking } from "../api/booking/booking.entity"
 import { ParkingSlot } from "../api/parking-slot/parking-slot.entity"
 import { User } from "../api/user/user.entity"
+import { AppDataSource } from "../data-source"
 
 export const fakeBookings: Array<Partial<Booking>> = [
   {

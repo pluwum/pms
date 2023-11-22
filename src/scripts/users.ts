@@ -1,6 +1,6 @@
-import { AppDataSource } from "../data-source"
-import { User } from "../api/user/user.entity"
 import "reflect-metadata"
+import { User } from "../api/user/user.entity"
+import { AppDataSource } from "../data-source"
 
 export const fakerUsers = [
   {

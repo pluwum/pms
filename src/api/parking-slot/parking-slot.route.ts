@@ -1,6 +1,6 @@
-import { ParkingSlotController } from "./parking-slot.controller"
-import { UserRole } from "../user/user.entity"
 import { type ControllerRoute } from "../types"
+import { UserRole } from "../user/user.entity"
+import { ParkingSlotController } from "./parking-slot.controller"
 
 const permissions = [UserRole.ADMIN]
 

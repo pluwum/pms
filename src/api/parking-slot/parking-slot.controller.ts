@@ -2,11 +2,11 @@ import { plainToClass } from "class-transformer"
 import { validate } from "class-validator"
 import { type Request } from "express"
 import { formatValidationErrors } from "../../utils"
+import { type RouteHandlerResponse } from "../types"
 import { CreateParkingSlotDTO } from "./dto/createParkingSlot.dto"
 import { UpdateParkingSlotDTO } from "./dto/updateParkingSlot.dto"
 import { ParkingSlotStatus } from "./parking-slot.entity"
 import { ParkingSlotService } from "./parking-slot.service"
-import { type RouteHandlerResponse } from "../types"
 
 export class ParkingSlotController {
   private readonly parkingSlotService = new ParkingSlotService()

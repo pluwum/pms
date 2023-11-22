@@ -4,15 +4,15 @@ API for the Parking management Application
 
 ## Tech stack
 
--   Typescript
--   Express
--   TypeOrm
--   Sqlite
+- Typescript
+- Express
+- TypeOrm
+- Sqlite
 
 ### Prerequisites
 
--   node - v20
--   npm
+- node - v20
+- npm
 
 Clone the repository / unpack git bundle
 
@@ -49,15 +49,17 @@ npm run start
 
 Once the application is started, you will need to create the following to test out functionalities
 
--   1. Create two users one admin and one standard, check [api documentation](src/docs/api.yaml) for the appropriate routes and payload.
--   2. Create parking slots (as many as you like). Mark the `id` fields return for later use.
--   3. You can now proceed to create bookings
+- 1. Create two users one admin and one standard, check [api documentation](src/docs/api.yaml) for the appropriate routes and payload.
+- 2. Create parking slots (as many as you like). Mark the `id` fields return for later use.
+- 3. You can now proceed to create bookings
 
 # [Project Documentation ](src/docs/NOTES.md)
 
-You can find notes on the project [here](src/docs/NOTES.md). It covers
+When the application is running locally, API documentation can be found by navigating to http://localhost:8000/api-docs in your browser.
 
--   The functionality that was built
--   The things didn't do but know I should
--   The decision making process for tech stack
+You can find more notes on the project [here](src/docs/NOTES.md). It covers
+
+- The functionality that was built
+- The things didn't do but know I should
+- Notes about the tech stack
 -

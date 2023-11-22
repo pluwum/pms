@@ -4,5 +4,5 @@ import { initializeDb } from "../data-source"
 dotenv.config()
 
 initializeDb().then(async () => {
-    //Create seed data
+    //Create seed data. call the scripts here
 })

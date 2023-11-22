@@ -1,11 +1,11 @@
 import { AppDataSource } from "../../data-source"
-import { NextFunction, Request, Response } from "express"
+import { Request } from "express"
 import { User, UserRole } from "./user.entity"
 import { generateToken } from "../../utils"
 export class UserController {
     private userRepository = AppDataSource.getRepository(User)
 
-    async all(request: Request, response: Response, next: NextFunction) {
+    async all() {
         const users = await this.userRepository.find()
 
         return {
@@ -14,7 +14,7 @@ export class UserController {
         }
     }
 
-    async one(request: Request, response: Response, next: NextFunction) {
+    async one(request: Request) {
         const id = request.params.id
 
         const user = await this.userRepository.findOne({
@@ -27,7 +27,7 @@ export class UserController {
         return { data: user, statusCode: 200 }
     }
 
-    async create(request: Request, response: Response, next: NextFunction) {
+    async create(request: Request) {
         const {
             firstName,
             lastName,
@@ -55,7 +55,7 @@ export class UserController {
         }
     }
 
-    async remove(request: Request, response: Response, next: NextFunction) {
+    async remove(request: Request) {
         const id = request.params.id
 
         let userToRemove = await this.userRepository.findOneBy({ id })

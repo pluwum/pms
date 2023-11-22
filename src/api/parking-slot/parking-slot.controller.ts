@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express"
+import { Request } from "express"
 import { ParkingSlotStatus } from "./parking-slot.entity"
 import { plainToClass } from "class-transformer"
 import { CreateParkingSlotDTO } from "./dto/createParkingSlot.dto"
@@ -10,7 +10,7 @@ import { UpdateParkingSlotDTO } from "./dto/updateParkingSlot.dto"
 export class ParkingSlotController {
     private parkingSlotService = new ParkingSlotService()
 
-    async all(request: Request, response: Response, next: NextFunction) {
+    async all() {
         const parkingSlots = await this.parkingSlotService.getParkingSlots()
 
         return {
@@ -19,7 +19,7 @@ export class ParkingSlotController {
         }
     }
 
-    async one(request: Request, response: Response, next: NextFunction) {
+    async one(request: Request) {
         const id = request.params.id
 
         try {
@@ -31,7 +31,7 @@ export class ParkingSlotController {
         }
     }
 
-    async create(request: Request, response: Response, next: NextFunction) {
+    async create(request: Request) {
         const parkingSlotDto = plainToClass(CreateParkingSlotDTO, request.body)
 
         const errors = await validate(parkingSlotDto)
@@ -59,7 +59,7 @@ export class ParkingSlotController {
         }
     }
 
-    async remove(request: Request, response: Response, next: NextFunction) {
+    async remove(request: Request) {
         const id = request.params.id
 
         try {
@@ -73,7 +73,7 @@ export class ParkingSlotController {
         }
     }
 
-    async update(request: Request, response: Response, next: NextFunction) {
+    async update(request: Request) {
         const id = request.params.id
 
         const parkingSlotDto = plainToClass(UpdateParkingSlotDTO, request.body)

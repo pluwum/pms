@@ -21,6 +21,7 @@ export class User {
     @Column()
     email: string
 
+    // Disabled for sqlite. Enable for postgres
     // @Column({
     //     type: "enum",
     //     enum: UserRole,

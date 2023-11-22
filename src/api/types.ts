@@ -1,4 +1,4 @@
-import { UserRole } from "./api/user/user.entity"
+import { UserRole } from "./user/user.entity"
 
 export type ControllerRoute = {
     method: string

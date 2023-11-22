@@ -1,5 +1,5 @@
-import { NextFunction, Request, Response } from "express"
-import { formatValidationErrors, isAdmin } from "../../utils"
+import { Request } from "express"
+import { formatValidationErrors } from "../../utils"
 import { plainToClass } from "class-transformer"
 import { CreateBookingDTO } from "./dto/createBooking.dto"
 import { validate } from "class-validator"
@@ -9,7 +9,7 @@ import { BookingService } from "./booking.service"
 export class BookingController {
     private bookingService = new BookingService()
 
-    async all(request: Request, response: Response, next: NextFunction) {
+    async all(request: Request) {
         const bookings = await this.bookingService.getBookings(request.user)
 
         const modifiedBookings = bookings.map(({ ownedBy, ...booking }) => {
@@ -25,7 +25,7 @@ export class BookingController {
         }
     }
 
-    async one(request: Request, response: Response, next: NextFunction) {
+    async one(request: Request) {
         const id = request.params.id
 
         const booking = await this.bookingService.getBookingById(
@@ -41,7 +41,7 @@ export class BookingController {
         }
     }
 
-    async remove(request: Request, response: Response, next: NextFunction) {
+    async remove(request: Request) {
         const id = request.params.id
 
         try {
@@ -55,7 +55,7 @@ export class BookingController {
         }
     }
 
-    async create(request: Request, response: Response, next: NextFunction) {
+    async create(request: Request) {
         const createBookingDto = plainToClass(CreateBookingDTO, request.body)
         const errors = await validate(createBookingDto)
 
@@ -79,7 +79,7 @@ export class BookingController {
         }
     }
 
-    async update(request: Request, response: Response, next: NextFunction) {
+    async update(request: Request) {
         const id = request.params.id
         const bookingUpdates = plainToClass(UpdateBookingDTO, request.body)
         const errors = await validate(bookingUpdates)

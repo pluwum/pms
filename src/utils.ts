@@ -1,12 +1,12 @@
 import crypto from "crypto"
-import { UserRole } from "./api/user/user.entity"
+import { User, UserRole } from "./api/user/user.entity"
 import { ValidationError } from "class-validator"
 
 export const generateToken = (length = 48) => {
     return crypto.randomBytes(length).toString("hex")
 }
 
-export const isAdmin = (user) => {
+export const isAdmin = (user: User) => {
     return user.role === UserRole.ADMIN
 }
 

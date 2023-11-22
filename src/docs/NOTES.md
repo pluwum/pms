@@ -63,8 +63,8 @@ For each parking slot the following rules have been implemented.
 -   Dockerize the application
 -   Swap database engine for postgres.
 -   Additional validation for bookings
--   Validation for user endpoints
--   Unit tests for the service logic in \*.service.ts files
+-   payload input Validation for user endpoints
+-   Unit tests for the service logic in `\*.service.ts` files
 -   Integration tests covering more edge cases. Currently even the validations rules are not tested.
 -   Provide commands to generate seed data.
 -   Limit the number of bookings a standard user is able to make on a given day.
@@ -72,3 +72,4 @@ For each parking slot the following rules have been implemented.
 -   Before booking a parking slot, validate that booking slot is not INACTIVE
 -   Complete openAPI documentation - Examples of payload are not provided, security warnings are seen when an api audit is performed, the current implementation of api docs puts the project at risk of spec-drift.
 -   Enforce a minimum length requirement for user token
+-   Improve Database error handling. Currently database errors are propagated to the user. This does not provide a good user experience and is potentially a security threat.

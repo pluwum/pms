@@ -4,6 +4,7 @@ import { ParkingSlot } from "./parking-slot.entity"
 
 export class ParkingSlotService {
     private parkingSlotRepository = AppDataSource.getRepository(ParkingSlot)
+
     async createParkingSlot(parkingSlot): Promise<ParkingSlot> {
         const newParkingSlot = Object.assign(new ParkingSlot(), parkingSlot)
 

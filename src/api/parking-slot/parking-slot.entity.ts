@@ -21,7 +21,7 @@ export class ParkingSlot {
 
     @Column()
     name: string
-
+    // UnComment this to use enum. This is not supported with Sqlite
     // @Column({
     //     type: "enum",
     //     enum: ParkingSlotStatus,
@@ -29,6 +29,7 @@ export class ParkingSlot {
     // })
     // status: ParkingSlotStatus
 
+    // Comment this when the above enum is in use.
     @Column()
     status: string
 

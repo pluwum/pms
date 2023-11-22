@@ -16,9 +16,9 @@ API for the Parking management Application
 
 Clone the repository / unpack git bundle
 
-<!-- ```bash
+```bash
 git clone git@github.com:pluwum/pms.git
-``` -->
+```
 
 ## Set up the API
 
@@ -44,7 +44,7 @@ Then finally start the api with
 npm run start
 ```
 
-# [Project Documentation ](NOTES.md)
+# [Project Documentation ](docs/NOTES.md)
 
 You can find notes on the project [here](NOTES.md). It covers
 

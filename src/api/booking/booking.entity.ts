@@ -1,44 +1,44 @@
 import {
-    Column,
-    CreateDateColumn,
-    Entity,
-    ManyToOne,
-    PrimaryGeneratedColumn,
-    UpdateDateColumn,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from "typeorm"
 import { User } from "../user/user.entity"
 import { ParkingSlot } from "../parking-slot/parking-slot.entity"
 
 @Entity()
 export class Booking {
-    @Column()
-    @PrimaryGeneratedColumn("uuid")
-    id: string
+  @Column()
+  @PrimaryGeneratedColumn("uuid")
+  id: string
 
-    @Column({ nullable: false })
-    slotId: string
+  @Column({ nullable: false })
+  slotId: string
 
-    @ManyToOne(() => ParkingSlot, (slot) => slot.id, { nullable: false })
-    slot: ParkingSlot
+  @ManyToOne(() => ParkingSlot, (slot) => slot.id, { nullable: false })
+  slot: ParkingSlot
 
-    @ManyToOne((type) => User, (user) => user.id, { nullable: false })
-    ownedBy: User
+  @ManyToOne((type) => User, (user) => user.id, { nullable: false })
+  ownedBy: User
 
-    @Column()
-    startsAt: Date
+  @Column()
+  startsAt: Date
 
-    @Column()
-    endsAt: Date
+  @Column()
+  endsAt: Date
 
-    @Column()
-    createdBy: string
+  @Column()
+  createdBy: string
 
-    @CreateDateColumn()
-    createdAt: Date
+  @CreateDateColumn()
+  createdAt: Date
 
-    @Column()
-    updatedBy: string
+  @Column()
+  updatedBy: string
 
-    @UpdateDateColumn()
-    updatedAt: Date
+  @UpdateDateColumn()
+  updatedAt: Date
 }

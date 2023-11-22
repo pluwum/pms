@@ -313,6 +313,7 @@ components:
                     description: Name of the parking slot
                 status:
                     type: string
+                    enum: ["active", "inactive"]
                     description: Current status of the parking slot
                 status_reason:
                     type: string
@@ -334,6 +335,7 @@ components:
                     description: Email address of the user
                 role:
                     type: string
+                    enum: ["admin", "standard"]
                     description: Role of the user
         UserIdAndToken:
             type: object

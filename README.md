@@ -42,7 +42,16 @@ Then finally start the api with
 
 ```bash
 npm run start
+
 ```
+
+## How to use.
+
+Once the application is started, you will need to create the following to test out functionalities
+
+-   1. Create two users one admin and one standard, check [api documentation](src/docs/api.yaml) for the appropriate routes and payload.
+-   2. Create parking slots (as many as you like). Mark the `id` fields return for later use.
+-   3. You can now proceed to create bookings
 
 # [Project Documentation ](src/docs/NOTES.md)
 

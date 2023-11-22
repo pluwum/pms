@@ -107,14 +107,14 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: "#/components/schemas/GetOneBooking"
+                            $ref: "#/components/schemas/Booking"
             responses:
                 "200":
                     description: Booking updated
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/Booking"
+                                $ref: "#/components/schemas/GetOneBooking"
 
     /api/v1/parking-slots:
         get:
@@ -132,7 +132,7 @@ paths:
                             schema:
                                 type: array
                                 items:
-                                    $ref: "#/components/schemas/ParkingSlot"
+                                    $ref: "#/components/schemas/GetAllParkingSlots"
         post:
             tags:
                 - Parking Slots
@@ -152,7 +152,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/ParkingSlot"
+                                $ref: "#/components/schemas/GetOneParkingSlot"
     /api/v1/parking-slots/{id}:
         get:
             tags:
@@ -173,7 +173,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/ParkingSlot"
+                                $ref: "#/components/schemas/GetOneParkingSlot"
         delete:
             tags:
                 - Parking Slots
@@ -215,7 +215,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: "#/components/schemas/ParkingSlot"
+                                $ref: "#/components/schemas/GetOneParkingSlot"
 
     /api/v1/users:
         get:
@@ -429,6 +429,37 @@ components:
                             - $ref: "#/components/schemas/Booking"
                             - $ref: "#/components/schemas/UpdateAndCreateInfo"
                     description: List of bookings
+                message:
+                    type: string
+                statusCode:
+                    type: string
+                    description: Http status code of operation
+
+        GetOneParkingSlot:
+            type: object
+            properties:
+                data:
+                    type: object
+                    allOf:
+                        - $ref: "#/components/schemas/ParkingSlot"
+                        - $ref: "#/components/schemas/UpdateAndCreateInfo"
+                message:
+                    type: string
+                statusCode:
+                    type: string
+                    description: Http status code of operation
+
+        GetAllParkingSlots:
+            type: object
+            properties:
+                data:
+                    type: array
+                    items:
+                        type: object
+                        allOf:
+                            - $ref: "#/components/schemas/ParkingSlot"
+                            - $ref: "#/components/schemas/UpdateAndCreateInfo"
+                    description: List of parking slots
                 message:
                     type: string
                 statusCode:

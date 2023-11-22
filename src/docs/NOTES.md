@@ -16,7 +16,7 @@ For each parking slot booking the following rules have been implemented.
 
 -   [Booking entity](../api/booking/booking.entity.ts)
 
-## Parking slot Management
+### Parking slot Management
 
 This feature allows an admin user to manage creation and update of parking slots.
 For each parking slot the following rules have been implemented.
@@ -46,12 +46,12 @@ For each parking slot the following rules have been implemented.
 -   Is not protected.
 -   Was given minimal effort as it was not priority for this task.
 
-### Design Patterns / Project structure
+# Design Patterns / Project structure
 
 -   Folder structure is inspired by a mixture of clean architecture, layered architecture and vertical slice
--   The project evolved to into this pattern as complexity increased. This arrangement ensures minimal change to several files when adding features, simplifies testing and discoverability. It also minimises cross cutting changes.
+-   The project evolved into this pattern as complexity increased. This arrangement ensures minimal change to several files when adding features, simplifies testing and discoverability.
 
-### Tech stack
+# Tech stack
 
 -   Typescript - Because it is the language i'm most comfortable with at the moment.
 -   Express - for it's light weight nature and ease of setup. It was either express or flask

@@ -44,9 +44,9 @@ Then finally start the api with
 npm run start
 ```
 
-# [Project Documentation ](docs/NOTES.md)
+# [Project Documentation ](src/docs/NOTES.md)
 
-You can find notes on the project [here](NOTES.md). It covers
+You can find notes on the project [here](src/docs/NOTES.md). It covers
 
 -   The functionality that was built
 -   The things didn't do but know I should

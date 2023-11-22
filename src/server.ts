@@ -4,13 +4,19 @@ import routes from "./api/routes"
 import cors from "cors"
 import { authenticate, authorize } from "./api/middleware"
 import dotenv from "dotenv"
+import swaggerUi from "swagger-ui-express"
+import yaml from "yamljs"
 
 dotenv.config()
 const server: Express = express()
 const baseUrl = process.env.BASE_URL || "/api/v1"
 
+const apiDocumentation = yaml.load(__dirname + "/docs/api.yaml")
+server.use("/api-docs", swaggerUi.serve, swaggerUi.setup(apiDocumentation))
+
 server.use(bodyParser.json())
 server.use(cors())
+
 // register express routes from defined application routes
 routes.forEach((route) => {
     route.route = `${baseUrl}${route.route}`

@@ -62,3 +62,4 @@ For each parking slot the following rules have been implemented. - Only admins h
 -   Limit the number of bookings a standard user is able to make on a given day.
 -   Improve typescript typing throughout the codebase. There is high reliance on implicit types, some parts of the code are not typed at all.
 -   Before booking a parking slot, validate that booking slot is not INACTIVE
+-   Complete openAPI documentation
